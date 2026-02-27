@@ -1,5 +1,5 @@
 // ============================================================
-// 预设文章模板管理
+// 预设文章模板管理 — 富 HTML 内联样式成品模板
 // ============================================================
 
 /** 文章模板类型 */
@@ -8,7 +8,8 @@ export interface ArticleTemplate {
   name: string;
   category: string;
   description: string;
-  content: string;
+  preview?: string;  // 模板预览缩略描述
+  content: string;   // Markdown + 富 HTML 内联样式
 }
 
 /** 模板分类 */
@@ -24,7 +25,7 @@ export const TEMPLATE_CATEGORIES = [
 export type TemplateCategoryKey = (typeof TEMPLATE_CATEGORIES)[number]['key'];
 
 // ============================================================
-// 预设模板数据
+// 预设模板数据 — 每个模板都是精美的富 HTML 排版成品
 // ============================================================
 
 const PRESET_TEMPLATES: ArticleTemplate[] = [
@@ -33,46 +34,65 @@ const PRESET_TEMPLATES: ArticleTemplate[] = [
     id: 'tech-share',
     name: '🔧 技术分享',
     category: 'work',
-    description: '适用于技术教程、经验总结，含代码示例和效果对比',
-    content: `# 🔧 技术分享：在这里写标题
+    description: '渐变标题 + 代码高亮 + 数据对比卡片',
+    content: `<div style="background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); padding: 40px 30px; border-radius: 16px; margin-bottom: 20px; text-align: center;">
+<p style="font-size: 28px; font-weight: 800; color: #fff; margin: 0 0 8px; letter-spacing: 1px;">🔧 技术分享标题</p>
+<p style="font-size: 14px; color: rgba(255,255,255,0.6); margin: 0;">一句话概括核心内容</p>
+</div>
 
-> 💡 一句话概括本文核心内容，让读者快速了解文章价值。
-
----
+<div style="background: #f0f4ff; border-left: 4px solid #667eea; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 20px 0; font-size: 15px; color: #4a5568; line-height: 1.8;">
+💡 <strong style="color: #667eea;">导读：</strong>用一段话描述本文的核心价值，让读者快速了解能学到什么。
+</div>
 
 ## 📌 背景
 
-在日常开发中，我们经常遇到 **某某问题**，传统的解决方案存在以下痛点：
+在日常开发中，我们经常遇到 **某某问题**，传统方案存在以下痛点：
 
-- ❌ 痛点一：简要描述
-- ❌ 痛点二：简要描述
-- ❌ 痛点三：简要描述
+<div style="display: flex; gap: 12px; margin: 16px 0;">
+<div style="flex: 1; background: #fff5f5; padding: 14px; border-radius: 10px; border: 1px solid #fed7d7;">
+<p style="margin: 0; font-size: 14px; color: #c53030;">❌ <strong>痛点一</strong></p>
+<p style="margin: 6px 0 0; font-size: 13px; color: #666;">简要描述问题</p>
+</div>
+<div style="flex: 1; background: #fff5f5; padding: 14px; border-radius: 10px; border: 1px solid #fed7d7;">
+<p style="margin: 0; font-size: 14px; color: #c53030;">❌ <strong>痛点二</strong></p>
+<p style="margin: 6px 0 0; font-size: 13px; color: #666;">简要描述问题</p>
+</div>
+</div>
 
-![配图：问题场景示意图](https://placehold.co/800x400/e3f2fd/1565c0?text=问题场景示意图)
+![配图](https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&fit=crop&auto=format&q=80)
 
 ---
 
 ## 🎯 核心方案
 
-### 关键实现
-
 \`\`\`javascript
 // 核心代码示例
 function solve(input) {
   const processed = preprocess(input);
-  const result = coreLogic(processed);
-  return format(result);
+  return coreLogic(processed);
 }
 \`\`\`
 
-> 🔑 **关键点**：这里解释代码中最重要的设计决策。
+<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 16px 20px; border-radius: 10px; margin: 16px 0; color: #fff; font-size: 14px; line-height: 1.8;">
+🔑 <strong style="color: #fff;">关键点：</strong>这里解释代码中最重要的设计决策和原因。
+</div>
 
 ### 效果对比
 
-| 指标 | 优化前 | 优化后 | 提升 |
-|------|--------|--------|------|
-| 响应时间 | 500ms | 50ms | 10x |
-| 内存占用 | 200MB | 50MB | 4x |
+<div style="display: flex; gap: 12px; margin: 16px 0;">
+<div style="flex: 1; background: #f0fff4; padding: 16px; border-radius: 10px; text-align: center; border: 1px solid #c6f6d5;">
+<p style="font-size: 32px; font-weight: 800; color: #22543d; margin: 0;">10x</p>
+<p style="font-size: 12px; color: #666; margin: 4px 0 0;">性能提升</p>
+</div>
+<div style="flex: 1; background: #ebf8ff; padding: 16px; border-radius: 10px; text-align: center; border: 1px solid #bee3f8;">
+<p style="font-size: 32px; font-weight: 800; color: #2a4365; margin: 0;">4x</p>
+<p style="font-size: 12px; color: #666; margin: 4px 0 0;">内存优化</p>
+</div>
+<div style="flex: 1; background: #faf5ff; padding: 16px; border-radius: 10px; text-align: center; border: 1px solid #e9d8fd;">
+<p style="font-size: 32px; font-weight: 800; color: #553c9a; margin: 0;">80%</p>
+<p style="font-size: 12px; color: #666; margin: 4px 0 0;">代码精简</p>
+</div>
+</div>
 
 ---
 
@@ -82,553 +102,245 @@ function solve(input) {
 - ✅ 解决了问题二
 - ✅ 解决了问题三
 
-*感谢阅读，欢迎点赞、收藏、转发 👍*
+<div style="text-align: center; padding: 20px 0; margin-top: 20px; border-top: 1px dashed #e2e8f0;">
+<p style="font-size: 13px; color: #999; margin: 0;">感谢阅读 · 欢迎点赞收藏转发 👍</p>
+</div>
 `,
   },
   {
     id: 'product-promo',
-    name: '🚀 产品推广',
+    name: '🚀 产品发布',
     category: 'marketing',
-    description: '适用于产品发布、功能宣传，含亮点展示和用户评价',
-    content: `# 🚀 产品名称 — 一句话核心卖点
+    description: '渐变头图 + 功能亮点卡片 + 用户评价',
+    content: `<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 50px 30px; border-radius: 16px; margin-bottom: 20px; text-align: center;">
+<p style="font-size: 14px; color: rgba(255,255,255,0.7); margin: 0 0 8px; letter-spacing: 3px;">✨ 全新发布</p>
+<p style="font-size: 30px; font-weight: 800; color: #fff; margin: 0 0 12px;">产品名称</p>
+<p style="font-size: 15px; color: rgba(255,255,255,0.85); margin: 0;">一句话核心卖点，让用户立刻心动</p>
+</div>
 
-> ✨ 用一段话描述产品的核心价值主张。
-
-![产品主视觉图](https://placehold.co/800x420/667eea/ffffff?text=产品主视觉)
+![产品主图](https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=800&fit=crop&auto=format&q=80)
 
 ---
 
 ## 🌟 三大核心亮点
 
-### 💎 亮点一：功能名称
-简要描述这个功能的价值和使用场景。
-
-### ⚡ 亮点二：功能名称
-简要描述这个功能的价值和使用场景。
-
-### 🎨 亮点三：功能名称
-简要描述这个功能的价值和使用场景。
-
----
-
-## 📊 数据说话
-
-- 📈 **10万+** 用户正在使用
-- ⭐ **4.9分** 用户平均评分
-- 🔄 **99.9%** 服务可用性
+<div style="display: flex; gap: 12px; margin: 20px 0;">
+<div style="flex: 1; background: linear-gradient(180deg, #ebf4ff 0%, #fff 100%); padding: 20px 16px; border-radius: 12px; text-align: center; border: 1px solid #bee3f8;">
+<p style="font-size: 36px; margin: 0 0 8px;">💎</p>
+<p style="font-weight: 700; font-size: 15px; color: #2b6cb0; margin: 0 0 6px;">功能一</p>
+<p style="font-size: 12px; color: #718096; margin: 0; line-height: 1.6;">简要描述价值</p>
+</div>
+<div style="flex: 1; background: linear-gradient(180deg, #f0fff4 0%, #fff 100%); padding: 20px 16px; border-radius: 12px; text-align: center; border: 1px solid #c6f6d5;">
+<p style="font-size: 36px; margin: 0 0 8px;">⚡</p>
+<p style="font-weight: 700; font-size: 15px; color: #276749; margin: 0 0 6px;">功能二</p>
+<p style="font-size: 12px; color: #718096; margin: 0; line-height: 1.6;">简要描述价值</p>
+</div>
+<div style="flex: 1; background: linear-gradient(180deg, #faf5ff 0%, #fff 100%); padding: 20px 16px; border-radius: 12px; text-align: center; border: 1px solid #e9d8fd;">
+<p style="font-size: 36px; margin: 0 0 8px;">🎨</p>
+<p style="font-weight: 700; font-size: 15px; color: #6b46c1; margin: 0 0 6px;">功能三</p>
+<p style="font-size: 12px; color: #718096; margin: 0; line-height: 1.6;">简要描述价值</p>
+</div>
+</div>
 
 ---
 
 ## 💬 用户怎么说
 
-> "这款产品彻底改变了我的工作方式。" —— **用户A**
+<div style="background: #f7fafc; padding: 20px; border-radius: 12px; margin: 12px 0; border: 1px solid #e2e8f0;">
+<p style="font-size: 15px; color: #4a5568; margin: 0 0 10px; line-height: 1.8; font-style: italic;">"这款产品彻底改变了我的工作方式，效率提升了至少 3 倍。"</p>
+<p style="font-size: 13px; color: #a0aec0; margin: 0; text-align: right;">—— <strong style="color: #718096;">用户A</strong>，产品经理</p>
+</div>
 
-> "界面简洁，功能强大，强烈推荐！" —— **用户B**
-
----
-
-## 🎁 限时福利
-
-🔥 **新用户专享**：注册即送 7 天高级会员体验
-
-[🔗 点击这里立即体验 →](https://example.com)
-
-*关注我们，获取更多产品动态 📱*
-`,
-  },
-  {
-    id: 'daily-essay',
-    name: '📝 日常随笔',
-    category: 'life',
-    description: '适用于生活感悟、日常记录，温暖文艺风格',
-    content: `# 📝 随笔标题：在这里写一个走心的标题
-
-> *"在这里放一句触动你的话，作为文章的引子。"*
-
-![题图](https://placehold.co/800x500/fdf6ec/8b4513?text=一张有意境的配图)
+<div style="background: #f7fafc; padding: 20px; border-radius: 12px; margin: 12px 0; border: 1px solid #e2e8f0;">
+<p style="font-size: 15px; color: #4a5568; margin: 0 0 10px; line-height: 1.8; font-style: italic;">"界面简洁，功能强大，上手零门槛。"</p>
+<p style="font-size: 13px; color: #a0aec0; margin: 0; text-align: right;">—— <strong style="color: #718096;">用户B</strong>，独立开发者</p>
+</div>
 
 ---
 
-在某个平凡的日子里，发生了一件小事，让我突然有了一些感触。
-
-也许你也有过类似的经历——在忙碌的生活中，突然被某个瞬间击中。
-
----
-
-## 故事
-
-在这里展开你的故事。好的故事不需要多么跌宕起伏，真实就好。
-
-有时候，生活中最打动人的，往往是那些 **不经意间的小细节**：
-
-- 清晨第一缕阳光透过窗帘的样子
-- 路边咖啡店飘出的香气
-- 陌生人一个善意的微笑
-
----
-
-## 感悟
-
-> 生活不在别处，就在每一个当下。那些看似平淡的日子，其实都在悄悄发光。
-
----
-
-*写于某年某月某日*
-*愿你也能在平凡的日子里，找到属于自己的小确幸 🌸*
-`,
-  },
-  {
-    id: 'news-report',
-    name: '📰 新闻资讯',
-    category: 'work',
-    description: '适用于行业动态、新闻报道、热点解读',
-    content: `# 📰 新闻标题：简洁有力的标题
-
-> 📅 2025年XX月XX日 | 来源：XX媒体
-
----
-
-**【导语】** 用一两句话概括新闻的核心内容。
-
-![新闻配图](https://placehold.co/800x450/e8eaf6/283593?text=新闻配图)
-
----
-
-## 事件详情
-
-**时间**：XXXX年XX月XX日 | **地点**：XX
-
-具体发生了什么，按照时间线排列关键信息。
-
----
-
-## 各方观点
-
-> "引用相关人士的观点。" —— **某某专家**
-
----
-
-## 影响与展望
-
-1. **短期影响**：描述
-2. **长期展望**：描述
-
----
-
-*本文仅代表作者观点，欢迎留言讨论 💬*
-`,
-  },
-  {
-    id: 'tutorial-guide',
-    name: '📖 教程指南',
-    category: 'knowledge',
-    description: '适用于操作教程、使用指南，含分步骤图文说明',
-    content: `# 📖 教程：如何完成某某操作
-
-> 🎯 本教程将手把手教你完成 XX，预计阅读时间 5 分钟。
-
----
-
-## 📋 准备工作
-
-- ✅ 准备项一
-- ✅ 准备项二
-
-> ⚠️ **注意**：重要的前置提醒。
-
----
-
-## 🔢 操作步骤
-
-### 第一步：步骤名称
-
-详细描述这一步需要做什么。
-
-![步骤一截图](https://placehold.co/800x450/e3f2fd/1565c0?text=步骤一截图)
-
-### 第二步：步骤名称
-
-详细描述这一步需要做什么。
-
-### 第三步：验证结果
-
-完成以上步骤后，你应该能看到以下效果。
-
----
-
-## ❓ 常见问题
-
-**Q：遇到问题一怎么办？**
-A：解决方案描述。
-
----
-
-*觉得有用？点赞收藏，下次不迷路 👍*
-`,
-  },
-  {
-    id: 'event-recap',
-    name: '🎉 活动回顾',
-    category: 'marketing',
-    description: '适用于活动总结、会议纪要、线下活动回顾',
-    content: `# 🎉 活动回顾：活动名称
-
-> 📅 活动时间：XXXX年XX月XX日 | 📍 活动地点：XX
-
----
-
-![活动海报](https://placehold.co/800x450/ff6b6b/ffffff?text=活动主视觉海报)
-
-## 活动概况
-
-本次活动共吸引了 **XXX** 位参与者，围绕 **主题关键词** 展开了深入交流。
-
----
-
-## 🎤 精彩瞬间
-
-### 环节一：开场致辞
-简要描述这个环节的内容和亮点。
-
-### 环节二：主题分享
-> "嘉宾的精彩语录。" —— **嘉宾姓名**
-
----
-
-## 📊 活动数据
-
-- 🧑‍🤝‍🧑 参与人数：**XXX** 人
-- 🎤 分享嘉宾：**X** 位
-- 👍 满意度：**XX%**
-
----
-
-*感谢所有参与者的支持 ❤️*
-`,
-  },
-  {
-    id: 'list-ranking',
-    name: '📋 盘点榜单',
-    category: 'knowledge',
-    description: '适用于Top排行、年度盘点、推荐清单',
-    content: `# 📋 2025年度盘点：XX领域 Top 5 推荐
-
-> 🔥 精心筛选，每一个都值得你花时间了解。
-
----
-
-## 🥇 第一名：名称
-**推荐指数：⭐⭐⭐⭐⭐**
-
-一段简洁有力的推荐理由。
-- ✅ 亮点一
-- ✅ 亮点二
-
----
-
-## 🥈 第二名：名称
-**推荐指数：⭐⭐⭐⭐⭐**
-
-一段简洁有力的推荐理由。
-
----
-
-## 🥉 第三名：名称
-**推荐指数：⭐⭐⭐⭐**
-
-一段简洁有力的推荐理由。
-
----
-
-## 📝 总结对比
-
-| 排名 | 名称 | 核心优势 | 适合人群 |
-|------|------|---------|---------|
-| 🥇 | 名称一 | 优势描述 | 人群描述 |
-| 🥈 | 名称二 | 优势描述 | 人群描述 |
-| 🥉 | 名称三 | 优势描述 | 人群描述 |
-
-*你最喜欢哪一个？欢迎评论区分享 💬*
-`,
-  },
-  {
-    id: 'interview-qa',
-    name: '🎙️ 人物访谈',
-    category: 'work',
-    description: '适用于人物专访、对话录、问答形式文章',
-    content: `# 🎙️ 对话XX：关于某某话题的深度思考
-
-> 📌 本期嘉宾：**嘉宾姓名**，职位/头衔
-
----
-
-![嘉宾照片](https://placehold.co/800x500/2d3436/ffffff?text=嘉宾照片)
-
-## 访谈正文
-
-**Q：第一个问题？**
-> 嘉宾的回答内容。
-
----
-
-**Q：第二个问题？**
-> 嘉宾的回答内容。
-
-> 💡 **金句**："把嘉宾最精彩的一句话单独提出来。"
-
----
-
-## 📌 快问快答
-
-| 问题 | 回答 |
-|------|------|
-| 最喜欢的书？ | 《书名》 |
-| 座右铭？ | "一句话" |
-
-*感谢 XX 接受本次访谈 🙏*
+<div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 24px; border-radius: 12px; text-align: center; margin: 20px 0;">
+<p style="font-size: 18px; font-weight: 700; color: #fff; margin: 0 0 8px;">🎁 限时福利</p>
+<p style="font-size: 14px; color: rgba(255,255,255,0.9); margin: 0;">新用户注册即送 7 天高级会员体验</p>
+</div>
+
+<div style="text-align: center; padding: 16px 0;">
+<p style="font-size: 13px; color: #999; margin: 0;">关注我们，获取更多产品动态 📱</p>
+</div>
 `,
   },
   // ===== 生活类 =====
   {
     id: 'food-review',
-    name: '🍜 美食推荐',
+    name: '🍜 美食探店',
     category: 'life',
-    description: '适用于餐厅探店、美食测评、菜谱分享',
-    content: `# 🍜 探店 | 这家隐藏在巷子里的小店，让我吃了三次
+    description: '暖色调头图 + 菜品卡片 + 评分星级',
+    content: `<div style="background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); padding: 40px 30px; border-radius: 16px; margin-bottom: 20px; text-align: center;">
+<p style="font-size: 14px; color: rgba(255,255,255,0.8); margin: 0 0 6px; letter-spacing: 3px;">🍴 探店日记</p>
+<p style="font-size: 28px; font-weight: 800; color: #fff; margin: 0 0 10px;">这家隐藏小店，让我吃了三次</p>
+<p style="font-size: 13px; color: rgba(255,255,255,0.85); margin: 0;">📍 XX路XX号 · 人均 ¥XX · ⭐ 4.8/5</p>
+</div>
 
-> 🔥 人均：XX元 | 📍 地址：XX路XX号 | ⭐ 推荐指数：4.8/5
-
----
-
-![餐厅环境](https://placehold.co/800x500/fff3e0/e65100?text=餐厅环境照片)
-
-## 🏠 环境
-
-走进店里，第一感觉是 **温馨而不拥挤**。木质桌椅搭配暖色灯光，适合朋友聚餐或情侣约会。
+![餐厅环境](https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&fit=crop&auto=format&q=80)
 
 ---
+
+<div style="background: #fffbeb; border: 1px solid #fef3c7; padding: 16px 20px; border-radius: 10px; margin: 16px 0;">
+<p style="font-size: 14px; color: #92400e; margin: 0; line-height: 1.8;">🏠 <strong style="color: #92400e;">环境：</strong>木质桌椅搭配暖色灯光，温馨而不拥挤，适合朋友聚餐或情侣约会。</p>
+</div>
 
 ## 🍽️ 必点菜品
 
-### ⭐ 招牌菜一：菜名
-![菜品照片](https://placehold.co/800x500/ffccbc/bf360c?text=招牌菜照片)
-
-口感描述，味道层次，食材新鲜度...这道菜是我回购三次的理由。
-
-### ⭐ 招牌菜二：菜名
-色香味俱全，分量十足，性价比很高。
-
-### 🍹 推荐饮品：饮品名
-清爽解腻，搭配主菜刚刚好。
-
----
-
-## 💰 人均消费
-
-| 菜品 | 价格 |
-|------|------|
-| 招牌菜一 | ¥XX |
-| 招牌菜二 | ¥XX |
-| 饮品 | ¥XX |
+<div style="display: flex; gap: 12px; margin: 16px 0;">
+<div style="flex: 1; border-radius: 12px; overflow: hidden; border: 1px solid #fed7aa;">
+<img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&fit=crop&auto=format&q=80" style="width: 100%; height: 120px; object-fit: cover; display: block;" />
+<div style="padding: 12px; background: #fff;">
+<p style="font-weight: 700; font-size: 14px; color: #c2410c; margin: 0 0 4px;">⭐ 招牌披萨</p>
+<p style="font-size: 12px; color: #78716c; margin: 0; line-height: 1.5;">芝士拉丝超长，饼底酥脆</p>
+<p style="font-size: 14px; font-weight: 700; color: #ea580c; margin: 6px 0 0;">¥68</p>
+</div>
+</div>
+<div style="flex: 1; border-radius: 12px; overflow: hidden; border: 1px solid #fed7aa;">
+<img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&fit=crop&auto=format&q=80" style="width: 100%; height: 120px; object-fit: cover; display: block;" />
+<div style="padding: 12px; background: #fff;">
+<p style="font-weight: 700; font-size: 14px; color: #c2410c; margin: 0 0 4px;">⭐ 鲜蔬沙拉</p>
+<p style="font-size: 12px; color: #78716c; margin: 0; line-height: 1.5;">新鲜有机蔬菜，清爽解腻</p>
+<p style="font-size: 14px; font-weight: 700; color: #ea580c; margin: 6px 0 0;">¥38</p>
+</div>
+</div>
+</div>
 
 ---
 
-## 📝 总结
+## 💰 消费参考
 
-> 如果你喜欢 XX 口味，这家店绝对不会让你失望。建议工作日去，周末需要排队。
+| 菜品 | 价格 | 推荐度 |
+|------|------|--------|
+| 招牌披萨 | ¥68 | ⭐⭐⭐⭐⭐ |
+| 鲜蔬沙拉 | ¥38 | ⭐⭐⭐⭐ |
+| 特调饮品 | ¥28 | ⭐⭐⭐⭐ |
 
-**🗺️ 导航搜索**：店名
-**🕐 营业时间**：11:00-22:00
+<div style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); padding: 16px 20px; border-radius: 10px; margin: 20px 0; text-align: center;">
+<p style="font-size: 14px; color: #7c2d12; margin: 0;">🗺️ 导航搜索「店名」| 🕐 营业 11:00-22:00 | 建议工作日去</p>
+</div>
 
-*你去过这家店吗？欢迎评论区分享你的体验 🍴*
+<p style="text-align: center; font-size: 13px; color: #999;">你去过这家店吗？评论区聊聊 🍴</p>
 `,
   },
   {
     id: 'travel-guide',
     name: '✈️ 旅行攻略',
     category: 'life',
-    description: '适用于旅行攻略、景点推荐、行程规划',
-    content: `# ✈️ XX旅行攻略 | X天X夜完美行程
+    description: '蓝色系头图 + 行程时间线 + 费用卡片',
+    content: `<div style="background: linear-gradient(135deg, #0093E9 0%, #80D0C7 100%); padding: 40px 30px; border-radius: 16px; margin-bottom: 20px; text-align: center;">
+<p style="font-size: 14px; color: rgba(255,255,255,0.7); margin: 0 0 6px; letter-spacing: 3px;">✈️ 旅行攻略</p>
+<p style="font-size: 28px; font-weight: 800; color: #fff; margin: 0 0 10px;">目的地名称 · X天X夜完美行程</p>
+<p style="font-size: 13px; color: rgba(255,255,255,0.85); margin: 0;">🗓️ 最佳时间 X-X月 · 💰 人均 ¥XXXX</p>
+</div>
 
-> 🗓️ 最佳旅行时间：X月-X月 | 💰 人均预算：XXXX元
+![目的地风景](https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&fit=crop&auto=format&q=80)
 
 ---
 
-![目的地风景](https://placehold.co/800x500/e0f7fa/006064?text=目的地风景照)
+## 📋 行前清单
 
-## 📋 行前准备
-
-- 🎫 机票/车票：提前XX天预订
-- 🏨 住宿：推荐XX区域
-- 📱 必备APP：地图、翻译、打车
-- 🧳 必带物品：防晒霜、充电宝、舒适的鞋
+<div style="background: #f0f9ff; padding: 16px 20px; border-radius: 10px; margin: 16px 0; border: 1px solid #bae6fd;">
+<p style="margin: 0 0 8px; font-size: 14px; color: #0369a1;">✅ 机票/车票：提前XX天预订</p>
+<p style="margin: 0 0 8px; font-size: 14px; color: #0369a1;">✅ 住宿：推荐XX区域</p>
+<p style="margin: 0 0 8px; font-size: 14px; color: #0369a1;">✅ 必备APP：地图、翻译、打车</p>
+<p style="margin: 0; font-size: 14px; color: #0369a1;">✅ 必带：防晒霜、充电宝、舒适的鞋</p>
+</div>
 
 ---
 
 ## 🗓️ 行程安排
 
-### Day 1：到达 + 市区游览
+<div style="border-left: 3px solid #0ea5e9; padding-left: 20px; margin: 16px 0;">
+<div style="margin-bottom: 20px; position: relative;">
+<div style="position: absolute; left: -28px; top: 2px; width: 14px; height: 14px; background: #0ea5e9; border-radius: 50%;"></div>
+<p style="font-weight: 700; font-size: 16px; color: #0c4a6e; margin: 0 0 6px;">Day 1 · 到达 + 市区游览</p>
+<p style="font-size: 13px; color: #64748b; margin: 0; line-height: 1.8;">上午抵达入住 → 下午景点A、景点B → 晚上美食街</p>
+</div>
+<div style="margin-bottom: 20px; position: relative;">
+<div style="position: absolute; left: -28px; top: 2px; width: 14px; height: 14px; background: #0ea5e9; border-radius: 50%;"></div>
+<p style="font-weight: 700; font-size: 16px; color: #0c4a6e; margin: 0 0 6px;">Day 2 · 核心景点</p>
+<p style="font-size: 13px; color: #64748b; margin: 0; line-height: 1.8;">全天游览景点C（建议 4-5 小时）</p>
+</div>
+<div style="position: relative;">
+<div style="position: absolute; left: -28px; top: 2px; width: 14px; height: 14px; background: #0ea5e9; border-radius: 50%;"></div>
+<p style="font-weight: 700; font-size: 16px; color: #0c4a6e; margin: 0 0 6px;">Day 3 · 文化体验 + 返程</p>
+<p style="font-size: 13px; color: #64748b; margin: 0; line-height: 1.8;">上午当地特色体验 → 下午购买伴手礼 → 返程</p>
+</div>
+</div>
 
-**上午**：抵达，入住酒店
-**下午**：景点A → 景点B
-**晚上**：XX夜市/美食街
-
-> 💡 **小贴士**：第一天不要安排太满，适应一下节奏。
-
-### Day 2：核心景点
-
-**全天**：景点C（建议游览 4-5 小时）
-
-![景点照片](https://placehold.co/800x500/c8e6c9/1b5e20?text=景点照片)
-
-### Day 3：文化体验 + 返程
-
-**上午**：当地特色体验
-**下午**：购买伴手礼，返程
+![景点照片](https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&fit=crop&auto=format&q=80)
 
 ---
 
 ## 💰 费用明细
 
-| 项目 | 费用 |
-|------|------|
-| 交通 | ¥XXX |
-| 住宿 | ¥XXX |
-| 餐饮 | ¥XXX |
-| 门票 | ¥XXX |
-| **合计** | **¥XXXX** |
+<div style="display: flex; gap: 10px; margin: 16px 0; flex-wrap: wrap;">
+<div style="flex: 1; min-width: 100px; background: #ecfdf5; padding: 14px; border-radius: 10px; text-align: center; border: 1px solid #a7f3d0;">
+<p style="font-size: 20px; font-weight: 800; color: #065f46; margin: 0;">¥XXX</p>
+<p style="font-size: 11px; color: #6b7280; margin: 4px 0 0;">🚗 交通</p>
+</div>
+<div style="flex: 1; min-width: 100px; background: #eff6ff; padding: 14px; border-radius: 10px; text-align: center; border: 1px solid #bfdbfe;">
+<p style="font-size: 20px; font-weight: 800; color: #1e40af; margin: 0;">¥XXX</p>
+<p style="font-size: 11px; color: #6b7280; margin: 4px 0 0;">🏨 住宿</p>
+</div>
+<div style="flex: 1; min-width: 100px; background: #fef3c7; padding: 14px; border-radius: 10px; text-align: center; border: 1px solid #fde68a;">
+<p style="font-size: 20px; font-weight: 800; color: #92400e; margin: 0;">¥XXX</p>
+<p style="font-size: 11px; color: #6b7280; margin: 4px 0 0;">🍜 餐饮</p>
+</div>
+</div>
 
----
-
-## ⚠️ 注意事项
-
-1. XX景点需要提前预约
-2. 当地天气多变，带好雨具
-3. 注意防晒和补水
-
-*收藏这篇攻略，下次旅行用得上 🌍*
+<p style="text-align: center; font-size: 13px; color: #999; margin-top: 20px;">收藏这篇攻略，下次旅行用得上 🌍</p>
 `,
   },
   {
-    id: 'fitness-plan',
-    name: '💪 健身打卡',
+    id: 'daily-essay',
+    name: '📝 日常随笔',
     category: 'life',
-    description: '适用于健身计划、运动记录、减脂增肌分享',
-    content: `# 💪 30天健身挑战 | 第X周打卡记录
+    description: '文艺暖色调 + 引言卡片 + 配图排版',
+    content: `<div style="background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%); padding: 40px 30px; border-radius: 16px; margin-bottom: 20px; text-align: center;">
+<p style="font-size: 26px; font-weight: 700; color: #5b4636; margin: 0 0 12px; line-height: 1.4;">在平凡的日子里<br/>找到属于自己的光</p>
+<p style="font-size: 13px; color: #a08060; margin: 0;">写于某年某月某日</p>
+</div>
 
-> 🎯 目标：减脂X斤 / 增肌 / 提升体能 | 📅 本周：第X周
+<div style="background: #fdf6ec; border-left: 4px solid #d4a574; padding: 16px 20px; border-radius: 0 10px 10px 0; margin: 20px 0;">
+<p style="font-size: 15px; color: #8b6914; margin: 0; font-style: italic; line-height: 1.8;">
+"在这里放一句触动你的话，作为文章的引子。也许是某本书里的句子，也许是某个人说过的话。"
+</p>
+</div>
 
----
+![配图](https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?w=800&fit=crop&auto=format&q=80)
 
-## 📊 本周数据
+## 🌿 故事的开始
 
-| 指标 | 上周 | 本周 | 变化 |
-|------|------|------|------|
-| 体重 | XX kg | XX kg | -X kg |
-| 体脂率 | XX% | XX% | -X% |
-| 运动天数 | X天 | X天 | — |
+在某个平凡的日子里，发生了一件小事，让我突然有了一些感触。
 
----
+也许你也有过类似的经历——在忙碌的生活中，突然被某个瞬间击中，然后开始思考一些平时不会想的事情。这就是生活中的故事，不需要多么戏剧化。
 
-## 🏋️ 训练记录
+<p style="text-align: center; color: #d4a574; margin: 24px 0; font-size: 16px; letter-spacing: 8px;">🌿 🍃 🌿 🍃 🌿</p>
 
-### 周一：上肢训练
-- 哑铃卧推 4×12
-- 俯卧撑 3×15
-- 哑铃飞鸟 3×12
+好的故事不需要多么跌宕起伏，真实就好。
 
-### 周三：下肢训练
-- 深蹲 4×15
-- 箭步蹲 3×12
-- 臀桥 3×20
+有时候，生活中最打动人的，往往是那些不经意间的小细节：
 
-### 周五：有氧 + 核心
-- 跑步 30分钟
-- 平板支撑 3×60秒
-- 卷腹 3×20
+<div style="background: #faf8f5; padding: 20px; border-radius: 12px; margin: 16px 0;">
+<p style="font-size: 14px; color: #8b6914; margin: 0 0 10px; line-height: 1.8;">☀️ 清晨第一缕阳光透过窗帘的样子</p>
+<p style="font-size: 14px; color: #8b6914; margin: 0 0 10px; line-height: 1.8;">☕ 路边咖啡店飘出的香气</p>
+<p style="font-size: 14px; color: #8b6914; margin: 0; line-height: 1.8;">😊 陌生人一个善意的微笑</p>
+</div>
 
----
+<p style="text-align: center; color: #d4a574; margin: 24px 0; font-size: 16px; letter-spacing: 8px;">🌿 🍃 🌿 🍃 🌿</p>
 
-## 🥗 饮食记录
+<div style="background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%); padding: 24px; border-radius: 12px; margin: 20px 0; text-align: center;">
+<p style="font-size: 16px; color: #5b4636; margin: 0; line-height: 1.8; font-style: italic;">
+生活不在别处，就在每一个当下。<br/>那些看似平淡的日子，其实都在悄悄发光。<br/>这是我最大的感悟。
+</p>
+</div>
 
-> 三分练七分吃，饮食控制是关键。
-
-**早餐**：全麦面包 + 鸡蛋 + 牛奶
-**午餐**：鸡胸肉 + 糙米 + 蔬菜
-**晚餐**：鱼肉 + 红薯 + 沙拉
-
----
-
-## 💭 本周感悟
-
-> 坚持就是胜利，每一次训练都是在投资未来的自己。
-
-*一起加油，下周见 🔥*
-`,
-  },
-  {
-    id: 'book-review',
-    name: '📚 读书笔记',
-    category: 'knowledge',
-    description: '适用于书评、读书笔记、好书推荐',
-    content: `# 📚 读书笔记 |《书名》
-
-> ⭐ 推荐指数：⭐⭐⭐⭐⭐ | 📖 作者：XX | 📄 页数：XXX页
-
----
-
-![书籍封面](https://placehold.co/400x560/f5f5f5/333333?text=书籍封面)
-
-## 📌 一句话推荐
-
-> "用一句话概括这本书为什么值得读。"
-
----
-
-## 📖 内容概要
-
-这本书主要讲了什么？用 3-5 句话概括核心内容。
-
----
-
-## ✨ 精华摘录
-
-> "书中最打动你的一段话。" —— 第X页
-
-> "另一段精彩的内容。" —— 第X页
-
----
-
-## 💡 我的思考
-
-读完这本书，我最大的收获是：
-
-1. **收获一**：具体描述
-2. **收获二**：具体描述
-3. **收获三**：具体描述
-
----
-
-## 🎯 行动清单
-
-读完不行动等于白读：
-
-- [ ] 行动项一
-- [ ] 行动项二
-- [ ] 行动项三
-
----
-
-## 📊 评分
-
-| 维度 | 评分 |
-|------|------|
-| 内容深度 | ⭐⭐⭐⭐⭐ |
-| 可读性 | ⭐⭐⭐⭐ |
-| 实用性 | ⭐⭐⭐⭐⭐ |
-| 推荐度 | ⭐⭐⭐⭐⭐ |
-
-*你读过这本书吗？欢迎分享你的感受 📖*
+<p style="text-align: center; font-size: 13px; color: #a08060; margin-top: 20px;">愿你也能在平凡的日子里，找到属于自己的小确幸 🌸</p>
 `,
   },
   // ===== 节日类 =====
@@ -636,147 +348,96 @@ A：解决方案描述。
     id: 'spring-festival',
     name: '🧧 春节祝福',
     category: 'festival',
-    description: '适用于春节、新年祝福推文',
-    content: `# 🧧 新春快乐 | 龙年大吉，万事如意
-
----
-
-<div style="text-align: center; padding: 20px 0;">
-<p style="font-size: 40px; margin: 0;">🏮🧧🎆🐉🎆🧧🏮</p>
+    description: '红金配色 + 灯笼装饰 + 福利卡片',
+    content: `<div style="background: linear-gradient(135deg, #c0392b 0%, #e74c3c 50%, #c0392b 100%); padding: 40px 30px; border-radius: 16px; margin-bottom: 20px; text-align: center; position: relative;">
+<p style="font-size: 40px; margin: 0 0 8px;">🏮🧧🎆🐉🎆🧧🏮</p>
+<p style="font-size: 30px; font-weight: 800; color: #ffd700; margin: 0 0 8px; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">新春快乐</p>
+<p style="font-size: 15px; color: rgba(255,255,255,0.9); margin: 0;">龙年大吉 · 万事如意 · 阖家欢乐</p>
 </div>
 
----
+<div style="background: #fff9f0; border: 2px solid #ffd700; padding: 20px; border-radius: 12px; margin: 20px 0; text-align: center;">
+<p style="font-size: 16px; color: #c0392b; margin: 0; line-height: 2;">
+亲爱的朋友们，值此新春佳节之际<br/>
+向大家致以最诚挚的祝福！
+</p>
+</div>
 
-## 🎊 新年寄语
-
-亲爱的朋友们：
-
-值此新春佳节之际，向大家致以最诚挚的祝福！
-
-过去的一年，感谢每一位朋友的支持与陪伴。新的一年，愿我们一起：
-
-- 🌟 事业更上一层楼
-- 💰 财源广进，红包拿到手软
-- ❤️ 家庭幸福，身体健康
-- 🎯 心想事成，万事如意
+<div style="display: flex; gap: 10px; margin: 20px 0;">
+<div style="flex: 1; background: linear-gradient(180deg, #fff5f5 0%, #fff 100%); padding: 16px; border-radius: 12px; text-align: center; border: 1px solid #fecaca;">
+<p style="font-size: 28px; margin: 0 0 6px;">🌟</p>
+<p style="font-weight: 700; font-size: 14px; color: #c0392b; margin: 0;">事业顺利</p>
+</div>
+<div style="flex: 1; background: linear-gradient(180deg, #fefce8 0%, #fff 100%); padding: 16px; border-radius: 12px; text-align: center; border: 1px solid #fde68a;">
+<p style="font-size: 28px; margin: 0 0 6px;">💰</p>
+<p style="font-weight: 700; font-size: 14px; color: #b45309; margin: 0;">财源广进</p>
+</div>
+<div style="flex: 1; background: linear-gradient(180deg, #fef2f2 0%, #fff 100%); padding: 16px; border-radius: 12px; text-align: center; border: 1px solid #fecaca;">
+<p style="font-size: 28px; margin: 0 0 6px;">❤️</p>
+<p style="font-weight: 700; font-size: 14px; color: #c0392b; margin: 0;">幸福安康</p>
+</div>
+</div>
 
 ---
 
 ## 🎁 新年福利
 
-为感谢大家的支持，我们准备了新年专属福利：
-
-🔴 **福利一**：XX优惠/礼品
-🔴 **福利二**：XX优惠/礼品
-🔴 **福利三**：XX优惠/礼品
-
-> 活动时间：X月X日 - X月X日
-
----
-
-<div style="text-align: center; padding: 20px 0;">
-<p style="font-size: 24px; color: #d32f2f; font-weight: bold;">🎆 恭贺新禧 · 阖家欢乐 🎆</p>
-<p style="font-size: 14px; color: #666;">新的一年，新的开始，新的希望</p>
+<div style="background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%); padding: 20px; border-radius: 12px; margin: 16px 0;">
+<p style="font-size: 16px; font-weight: 700; color: #7c2d12; margin: 0 0 8px; text-align: center;">🔴 新年专属福利</p>
+<p style="font-size: 14px; color: #92400e; margin: 0 0 6px;">🧧 福利一：XX优惠/礼品</p>
+<p style="font-size: 14px; color: #92400e; margin: 0 0 6px;">🧧 福利二：XX优惠/礼品</p>
+<p style="font-size: 14px; color: #92400e; margin: 0;">🧧 福利三：XX优惠/礼品</p>
 </div>
 
-*祝大家新年快乐，龙年大吉！🐉*
+<div style="text-align: center; padding: 24px 0; margin-top: 16px;">
+<p style="font-size: 22px; color: #c0392b; font-weight: 800; margin: 0 0 6px;">🎆 恭贺新禧 · 阖家欢乐 🎆</p>
+<p style="font-size: 13px; color: #999; margin: 0;">新的一年，新的开始，新的希望</p>
+</div>
 `,
   },
   {
     id: 'mid-autumn',
     name: '🥮 中秋节',
     category: 'festival',
-    description: '适用于中秋节祝福、团圆主题推文',
-    content: `# 🥮 中秋佳节 | 月圆人团圆
-
----
-
-<div style="text-align: center; padding: 20px 0;">
-<p style="font-size: 40px; margin: 0;">🌕🏮🥮🎑🥮🏮🌕</p>
+    description: '深蓝月光色 + 月亮装饰 + 习俗卡片',
+    content: `<div style="background: linear-gradient(135deg, #0c1445 0%, #1a237e 50%, #283593 100%); padding: 40px 30px; border-radius: 16px; margin-bottom: 20px; text-align: center;">
+<p style="font-size: 50px; margin: 0 0 8px;">🌕</p>
+<p style="font-size: 28px; font-weight: 800; color: #ffd54f; margin: 0 0 8px; text-shadow: 0 2px 8px rgba(255,213,79,0.3);">中秋佳节</p>
+<p style="font-size: 15px; color: rgba(255,255,255,0.8); margin: 0;">月圆人团圆 · 花好月圆夜</p>
 </div>
 
----
+<div style="background: #fffde7; border-left: 4px solid #ffd54f; padding: 16px 20px; border-radius: 0 10px 10px 0; margin: 20px 0;">
+<p style="font-size: 15px; color: #5d4037; margin: 0; font-style: italic; line-height: 1.8;">
+"但愿人长久，千里共婵娟。" —— 苏轼
+</p>
+</div>
 
-## 🌙 中秋寄语
-
-> *"但愿人长久，千里共婵娟。"*
-
-又是一年中秋时，月光如水，思念如潮。
-
-无论你身在何方，愿这轮明月带去我们最真挚的祝福——**团圆、幸福、美满**。
+![月亮](https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&fit=crop&auto=format&q=80)
 
 ---
 
 ## 🥮 中秋习俗
 
-- 🌕 **赏月**：一家人围坐在一起，仰望明月
-- 🥮 **吃月饼**：甜蜜的味道，团圆的象征
-- 🏮 **赏花灯**：五彩缤纷，点亮夜空
-- 📝 **猜灯谜**：趣味横生，其乐融融
-
----
-
-## 🎁 中秋福利
-
-🔴 中秋限定礼盒，限量发售
-🔴 关注公众号，抽取月饼礼盒
-
----
-
-<div style="text-align: center; padding: 20px 0;">
-<p style="font-size: 20px; color: #e65100; font-weight: bold;">花好月圆 · 阖家团圆</p>
-<p style="font-size: 14px; color: #999;">中秋快乐 🌕</p>
+<div style="display: flex; gap: 10px; margin: 16px 0; flex-wrap: wrap;">
+<div style="flex: 1; min-width: 120px; background: linear-gradient(180deg, #fffde7 0%, #fff 100%); padding: 16px; border-radius: 12px; text-align: center; border: 1px solid #fff9c4;">
+<p style="font-size: 32px; margin: 0 0 6px;">🌕</p>
+<p style="font-weight: 700; font-size: 13px; color: #5d4037; margin: 0 0 4px;">赏月</p>
+<p style="font-size: 11px; color: #8d6e63; margin: 0;">仰望明月</p>
 </div>
-`,
-  },
-  {
-    id: 'mothers-day',
-    name: '💐 母亲节',
-    category: 'festival',
-    description: '适用于母亲节感恩、祝福推文',
-    content: `# 💐 母亲节快乐 | 妈妈，谢谢您
-
----
-
-<div style="text-align: center; padding: 20px 0;">
-<p style="font-size: 40px; margin: 0;">💐🌹❤️👩‍👧‍👦❤️🌹💐</p>
+<div style="flex: 1; min-width: 120px; background: linear-gradient(180deg, #fff3e0 0%, #fff 100%); padding: 16px; border-radius: 12px; text-align: center; border: 1px solid #ffe0b2;">
+<p style="font-size: 32px; margin: 0 0 6px;">🥮</p>
+<p style="font-weight: 700; font-size: 13px; color: #5d4037; margin: 0 0 4px;">吃月饼</p>
+<p style="font-size: 11px; color: #8d6e63; margin: 0;">团圆象征</p>
+</div>
+<div style="flex: 1; min-width: 120px; background: linear-gradient(180deg, #fce4ec 0%, #fff 100%); padding: 16px; border-radius: 12px; text-align: center; border: 1px solid #f8bbd0;">
+<p style="font-size: 32px; margin: 0 0 6px;">🏮</p>
+<p style="font-weight: 700; font-size: 13px; color: #5d4037; margin: 0 0 4px;">赏花灯</p>
+<p style="font-size: 11px; color: #8d6e63; margin: 0;">点亮夜空</p>
+</div>
 </div>
 
----
-
-> *"世界上有一种最美丽的声音，那便是母亲的呼唤。" —— 但丁*
-
----
-
-## 💝 致妈妈的一封信
-
-亲爱的妈妈：
-
-小时候，您是我的全世界。长大后，我才明白，您为我撑起了整个世界。
-
-那些年，您教会了我：
-
-- 🌱 **善良**：对每个人都温柔以待
-- 💪 **坚强**：跌倒了就爬起来
-- ❤️ **爱**：爱是最好的语言
-
----
-
-## 🎁 送给妈妈的礼物清单
-
-| 礼物 | 适合 | 预算 |
-|------|------|------|
-| 鲜花花束 | 所有妈妈 | ¥99-299 |
-| 护肤套装 | 爱美的妈妈 | ¥200-500 |
-| 按摩仪 | 辛劳的妈妈 | ¥300-800 |
-| 一顿大餐 | 美食家妈妈 | ¥200-500 |
-| 一封手写信 | 所有妈妈 | ❤️ 无价 |
-
----
-
-<div style="text-align: center; padding: 20px 0;">
-<p style="font-size: 20px; color: #e91e63; font-weight: bold;">妈妈，我爱您 ❤️</p>
-<p style="font-size: 14px; color: #999;">Happy Mother's Day</p>
+<div style="background: linear-gradient(135deg, #1a237e 0%, #283593 100%); padding: 24px; border-radius: 12px; text-align: center; margin: 20px 0;">
+<p style="font-size: 20px; color: #ffd54f; font-weight: 700; margin: 0 0 6px;">花好月圆 · 阖家团圆</p>
+<p style="font-size: 13px; color: rgba(255,255,255,0.7); margin: 0;">中秋快乐 🌕</p>
 </div>
 `,
   },
@@ -785,220 +446,446 @@ A：解决方案描述。
     id: 'sale-promo',
     name: '🛍️ 促销活动',
     category: 'marketing',
-    description: '适用于打折促销、限时优惠、电商活动',
-    content: `# 🛍️ 限时特惠 | 全场低至X折，错过再等一年
-
----
-
-<div style="text-align: center; background: linear-gradient(135deg, #ff6b6b, #ee5a24); padding: 24px; border-radius: 12px; margin: 16px 0;">
-<p style="font-size: 32px; color: #fff; font-weight: bold; margin: 0;">限时 72 小时</p>
-<p style="font-size: 18px; color: rgba(255,255,255,0.9); margin: 8px 0 0;">全场商品低至 X 折起</p>
+    description: '红色促销风 + 倒计时 + 爆款卡片',
+    content: `<div style="background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%); padding: 40px 30px; border-radius: 16px; margin-bottom: 20px; text-align: center;">
+<p style="font-size: 14px; color: rgba(255,255,255,0.8); margin: 0 0 6px; letter-spacing: 3px;">🔥 限时特惠</p>
+<p style="font-size: 36px; font-weight: 900; color: #fff; margin: 0 0 8px;">全场低至 3 折</p>
+<p style="font-size: 15px; color: #ffd700; margin: 0; font-weight: 600;">⏰ 仅剩 72 小时 · 错过再等一年</p>
 </div>
-
----
 
 ## 🔥 爆款推荐
 
-### ⭐ 爆款一：商品名称
-~~原价：¥XXX~~ → **活动价：¥XX**
-- 核心卖点一
-- 核心卖点二
+<div style="border: 2px solid #ff4b2b; border-radius: 12px; overflow: hidden; margin: 16px 0;">
+<div style="background: #ff4b2b; padding: 8px 16px;">
+<p style="font-size: 13px; color: #fff; margin: 0; font-weight: 700;">🏷️ 爆款一 · 限量抢购</p>
+</div>
+<div style="padding: 16px; background: #fff;">
+<p style="font-size: 16px; font-weight: 700; color: #333; margin: 0 0 8px;">商品名称</p>
+<p style="font-size: 13px; color: #999; margin: 0 0 8px; text-decoration: line-through;">原价：¥XXX</p>
+<p style="font-size: 24px; font-weight: 900; color: #ff4b2b; margin: 0;">¥XX <span style="font-size: 12px; font-weight: 400; color: #999;">起</span></p>
+</div>
+</div>
 
-### ⭐ 爆款二：商品名称
-~~原价：¥XXX~~ → **活动价：¥XX**
-- 核心卖点一
-- 核心卖点二
+<div style="border: 2px solid #ff416c; border-radius: 12px; overflow: hidden; margin: 16px 0;">
+<div style="background: #ff416c; padding: 8px 16px;">
+<p style="font-size: 13px; color: #fff; margin: 0; font-weight: 700;">🏷️ 爆款二 · 人气之选</p>
+</div>
+<div style="padding: 16px; background: #fff;">
+<p style="font-size: 16px; font-weight: 700; color: #333; margin: 0 0 8px;">商品名称</p>
+<p style="font-size: 13px; color: #999; margin: 0 0 8px; text-decoration: line-through;">原价：¥XXX</p>
+<p style="font-size: 24px; font-weight: 900; color: #ff416c; margin: 0;">¥XX <span style="font-size: 12px; font-weight: 400; color: #999;">起</span></p>
+</div>
+</div>
 
 ---
 
 ## 🎁 满减优惠
 
-| 满减档位 | 优惠金额 |
-|---------|---------|
-| 满 100 | 减 20 |
-| 满 200 | 减 50 |
-| 满 500 | 减 150 |
+<div style="display: flex; gap: 8px; margin: 16px 0;">
+<div style="flex: 1; background: #fff5f5; padding: 12px; border-radius: 10px; text-align: center; border: 2px dashed #ff4b2b;">
+<p style="font-size: 18px; font-weight: 800; color: #ff4b2b; margin: 0;">满100减20</p>
+</div>
+<div style="flex: 1; background: #fff5f5; padding: 12px; border-radius: 10px; text-align: center; border: 2px dashed #ff416c;">
+<p style="font-size: 18px; font-weight: 800; color: #ff416c; margin: 0;">满200减50</p>
+</div>
+<div style="flex: 1; background: #fff5f5; padding: 12px; border-radius: 10px; text-align: center; border: 2px dashed #e91e63;">
+<p style="font-size: 18px; font-weight: 800; color: #e91e63; margin: 0;">满500减150</p>
+</div>
+</div>
 
----
-
-## ⏰ 活动规则
-
-1. 活动时间：X月X日 - X月X日
-2. 优惠不可叠加使用
-3. 数量有限，售完即止
-
-> 👉 **长按识别下方二维码，立即抢购**
-
-*手慢无，赶紧行动吧 🏃‍♂️*
-`,
-  },
-  {
-    id: 'brand-story',
-    name: '🏢 品牌故事',
-    category: 'marketing',
-    description: '适用于品牌介绍、企业文化、创业故事',
-    content: `# 🏢 品牌名称 | 我们的故事
-
-> *"用一句话概括品牌的使命或愿景。"*
-
----
-
-![品牌视觉](https://placehold.co/800x400/1a1a2e/e94560?text=品牌视觉)
-
-## 🌱 起源
-
-XXXX年，怀着 **XX的初心**，我们踏上了创业之路。
-
-那时候，我们只有X个人，一间小办公室，和一个改变XX的梦想。
-
----
-
-## 🚀 成长
-
-经过X年的发展，我们已经：
-
-- 📈 服务了 **XX万+** 用户
-- 🌍 覆盖 **XX个** 城市
-- 👥 团队扩展到 **XX人**
-
----
-
-## 💡 理念
-
-我们相信：
-
-> **XX理念**——用一段话阐述品牌的核心价值观。
-
----
-
-## 🎯 未来
-
-我们将继续坚持初心，为用户创造更大的价值。
-
-*感谢每一位支持我们的朋友 ❤️*
+<div style="background: #333; padding: 16px; border-radius: 10px; margin: 20px 0; text-align: center;">
+<p style="font-size: 14px; color: #ffd700; margin: 0; font-weight: 600;">👉 长按识别二维码，立即抢购 · 手慢无 🏃‍♂️</p>
+</div>
 `,
   },
   // ===== 知识类 =====
   {
     id: 'knowledge-card',
-    name: '🧠 知识卡片',
+    name: '📚 知识卡片',
     category: 'knowledge',
-    description: '适用于知识科普、冷知识、每日一学',
-    content: `# 🧠 今日知识 | 你知道吗？
+    description: '清新蓝绿 + 知识点卡片 + 总结框',
+    content: `<div style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); padding: 40px 30px; border-radius: 16px; margin-bottom: 20px; text-align: center;">
+<p style="font-size: 14px; color: rgba(255,255,255,0.8); margin: 0 0 6px; letter-spacing: 3px;">📚 知识卡片</p>
+<p style="font-size: 28px; font-weight: 800; color: #fff; margin: 0 0 8px;">今天学到了什么？</p>
+<p style="font-size: 13px; color: rgba(255,255,255,0.85); margin: 0;">每天进步一点点</p>
+</div>
 
----
+## 📖 知识点一
 
-<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 24px; border-radius: 12px; margin: 16px 0; color: #fff;">
-<p style="font-size: 14px; margin: 0 0 8px; opacity: 0.8;">📅 每日一学</p>
-<p style="font-size: 22px; font-weight: bold; margin: 0; line-height: 1.5;">在这里写一个引人入胜的知识点标题</p>
+<div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 16px 20px; border-radius: 10px; margin: 16px 0;">
+<p style="font-weight: 700; font-size: 15px; color: #166534; margin: 0 0 8px;">💡 核心概念</p>
+<p style="font-size: 14px; color: #4a5568; margin: 0; line-height: 1.8;">在这里解释第一个知识点的核心内容，用简洁的语言让读者快速理解。</p>
+</div>
+
+## 📖 知识点二
+
+<div style="background: #eff6ff; border: 1px solid #bfdbfe; padding: 16px 20px; border-radius: 10px; margin: 16px 0;">
+<p style="font-weight: 700; font-size: 15px; color: #1e40af; margin: 0 0 8px;">💡 核心概念</p>
+<p style="font-size: 14px; color: #4a5568; margin: 0; line-height: 1.8;">在这里解释第二个知识点，可以配合例子说明。</p>
 </div>
 
 ---
 
-## 📌 知识点
+## ✅ 今日总结
 
-用通俗易懂的语言解释这个知识点。
+<div style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); padding: 20px; border-radius: 12px; margin: 16px 0;">
+<p style="font-size: 14px; color: #fff; margin: 0 0 6px;">✅ 知识点一：一句话总结</p>
+<p style="font-size: 14px; color: #fff; margin: 0 0 6px;">✅ 知识点二：一句话总结</p>
+<p style="font-size: 14px; color: #fff; margin: 0;">✅ 知识点三：一句话总结</p>
+</div>
 
-可以用类比的方式帮助理解：
-
-> 💡 **打个比方**：就像 XX 一样，YY 其实就是 ZZ。
-
----
-
-## 🔍 深入了解
-
-### 原理是什么？
-
-详细解释背后的原理或机制。
-
-### 有什么用？
-
-这个知识在生活中的实际应用。
-
----
-
-## 📊 数据支撑
-
-| 数据 | 说明 |
-|------|------|
-| XX% | 相关统计数据 |
-| XX亿 | 相关规模数据 |
-
----
-
-## 💭 延伸思考
-
-> 了解了这个知识点，你有什么新的想法？
-
----
-
-*每天学一点，积少成多 📚*
-*觉得有用就转发给朋友吧 👍*
+<p style="text-align: center; font-size: 13px; color: #999; margin-top: 20px;">点赞收藏，每天学一点 📚</p>
 `,
   },
   {
     id: 'weekly-report',
     name: '📊 周报总结',
     category: 'work',
-    description: '适用于工作周报、项目进展、团队汇报',
-    content: `# 📊 周报 | 第X周工作总结
+    description: '商务蓝 + 数据卡片 + 进度条',
+    content: `<div style="background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%); padding: 40px 30px; border-radius: 16px; margin-bottom: 20px; text-align: center;">
+<p style="font-size: 14px; color: rgba(255,255,255,0.7); margin: 0 0 6px; letter-spacing: 3px;">📊 工作周报</p>
+<p style="font-size: 28px; font-weight: 800; color: #fff; margin: 0 0 8px;">第 XX 周工作总结</p>
+<p style="font-size: 13px; color: rgba(255,255,255,0.85); margin: 0;">XX月XX日 — XX月XX日</p>
+</div>
 
-> 📅 X月X日 - X月X日 | 👤 汇报人：XX
+## 📈 本周数据
+
+<div style="display: flex; gap: 10px; margin: 16px 0;">
+<div style="flex: 1; background: #eff6ff; padding: 16px; border-radius: 10px; text-align: center; border: 1px solid #bfdbfe;">
+<p style="font-size: 28px; font-weight: 800; color: #1e40af; margin: 0;">12</p>
+<p style="font-size: 12px; color: #6b7280; margin: 4px 0 0;">完成任务</p>
+</div>
+<div style="flex: 1; background: #f0fdf4; padding: 16px; border-radius: 10px; text-align: center; border: 1px solid #bbf7d0;">
+<p style="font-size: 28px; font-weight: 800; color: #166534; margin: 0;">95%</p>
+<p style="font-size: 12px; color: #6b7280; margin: 4px 0 0;">完成率</p>
+</div>
+<div style="flex: 1; background: #fef3c7; padding: 16px; border-radius: 10px; text-align: center; border: 1px solid #fde68a;">
+<p style="font-size: 28px; font-weight: 800; color: #92400e; margin: 0;">3</p>
+<p style="font-size: 12px; color: #6b7280; margin: 4px 0 0;">待跟进</p>
+</div>
+</div>
 
 ---
 
 ## ✅ 本周完成
 
-### 项目A
-- [x] 完成了XX功能开发
-- [x] 修复了XX个bug
-- [x] 通过了XX测试
+- 完成了项目A的核心功能开发
+- 修复了X个线上问题
+- 完成了需求评审和技术方案设计
 
-### 项目B
-- [x] 完成了XX方案设计
-- [x] 与XX团队对齐需求
+## 🔄 进行中
+
+<div style="background: #f8fafc; padding: 16px; border-radius: 10px; margin: 12px 0; border: 1px solid #e2e8f0;">
+<p style="font-size: 14px; color: #334155; margin: 0 0 8px;">📌 项目B — 预计下周完成</p>
+<div style="background: #e2e8f0; border-radius: 6px; height: 8px; overflow: hidden;">
+<div style="background: linear-gradient(90deg, #3b82f6, #2563eb); width: 70%; height: 100%; border-radius: 6px;"></div>
+</div>
+<p style="font-size: 12px; color: #94a3b8; margin: 4px 0 0; text-align: right;">70%</p>
+</div>
+
+## 📅 下周计划
+
+- 完成项目B剩余功能
+- 启动项目C的技术调研
+- 团队代码评审
+
+<p style="text-align: center; font-size: 13px; color: #999; margin-top: 20px;">以上为本周工作总结 📊</p>
+`,
+  },
+  {
+    id: 'book-review',
+    name: '📖 读书笔记',
+    category: 'knowledge',
+    description: '文艺棕色调 + 书籍信息卡 + 金句摘录',
+    content: `<div style="background: linear-gradient(135deg, #3c1053 0%, #ad5389 100%); padding: 40px 30px; border-radius: 16px; margin-bottom: 20px; text-align: center;">
+<p style="font-size: 14px; color: rgba(255,255,255,0.7); margin: 0 0 6px; letter-spacing: 3px;">📖 读书笔记</p>
+<p style="font-size: 28px; font-weight: 800; color: #fff; margin: 0 0 8px;">《书名》</p>
+<p style="font-size: 13px; color: rgba(255,255,255,0.85); margin: 0;">作者名 · 出版年份</p>
+</div>
+
+## 📋 书籍信息
+
+<div style="display: flex; gap: 12px; margin: 16px 0;">
+<div style="flex: 1; background: #faf5ff; padding: 14px; border-radius: 10px; text-align: center; border: 1px solid #e9d5ff;">
+<p style="font-size: 13px; color: #7c3aed; margin: 0;">⭐ 推荐指数</p>
+<p style="font-size: 18px; font-weight: 700; color: #5b21b6; margin: 4px 0 0;">⭐⭐⭐⭐⭐</p>
+</div>
+<div style="flex: 1; background: #fdf4ff; padding: 14px; border-radius: 10px; text-align: center; border: 1px solid #f5d0fe;">
+<p style="font-size: 13px; color: #a21caf; margin: 0;">📄 页数</p>
+<p style="font-size: 18px; font-weight: 700; color: #86198f; margin: 4px 0 0;">XXX 页</p>
+</div>
+<div style="flex: 1; background: #fef2f2; padding: 14px; border-radius: 10px; text-align: center; border: 1px solid #fecaca;">
+<p style="font-size: 13px; color: #dc2626; margin: 0;">⏱️ 阅读时长</p>
+<p style="font-size: 18px; font-weight: 700; color: #b91c1c; margin: 4px 0 0;">X 小时</p>
+</div>
+</div>
 
 ---
 
-## 📈 关键数据
+## 💎 金句摘录
 
-| 指标 | 上周 | 本周 | 环比 |
+<div style="background: #faf5ff; border-left: 4px solid #a855f7; padding: 16px 20px; border-radius: 0 10px 10px 0; margin: 16px 0;">
+<p style="font-size: 15px; color: #6b21a8; margin: 0; font-style: italic; line-height: 1.8;">"在这里写下书中最打动你的一句话。"</p>
+</div>
+
+<div style="background: #fdf4ff; border-left: 4px solid #d946ef; padding: 16px 20px; border-radius: 0 10px 10px 0; margin: 16px 0;">
+<p style="font-size: 15px; color: #86198f; margin: 0; font-style: italic; line-height: 1.8;">"第二句金句摘录。"</p>
+</div>
+
+## 📝 读后感
+
+这本书让我印象最深的是……
+
+---
+
+## ✅ 行动清单
+
+- 把书中的方法应用到工作中
+- 推荐给身边的朋友
+- 下一本计划阅读《XX》
+
+<p style="text-align: center; font-size: 13px; color: #999; margin-top: 20px;">好书值得分享，你读过这本吗？📖</p>
+`,
+  },
+  {
+    id: 'fitness-plan',
+    name: '💪 健身打卡',
+    category: 'life',
+    description: '活力橙绿 + 运动数据 + 饮食卡片',
+    content: `<div style="background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%); padding: 40px 30px; border-radius: 16px; margin-bottom: 20px; text-align: center;">
+<p style="font-size: 14px; color: rgba(255,255,255,0.8); margin: 0 0 6px; letter-spacing: 3px;">💪 健身打卡</p>
+<p style="font-size: 28px; font-weight: 800; color: #fff; margin: 0 0 8px;">Day XX · 今日训练记录</p>
+<p style="font-size: 13px; color: rgba(255,255,255,0.9); margin: 0;">坚持就是胜利 🏆</p>
+</div>
+
+## 🏋️ 今日训练
+
+<div style="display: flex; gap: 10px; margin: 16px 0;">
+<div style="flex: 1; background: #fff7ed; padding: 14px; border-radius: 10px; text-align: center; border: 1px solid #fed7aa;">
+<p style="font-size: 24px; font-weight: 800; color: #c2410c; margin: 0;">45</p>
+<p style="font-size: 11px; color: #6b7280; margin: 4px 0 0;">⏱️ 分钟</p>
+</div>
+<div style="flex: 1; background: #fef3c7; padding: 14px; border-radius: 10px; text-align: center; border: 1px solid #fde68a;">
+<p style="font-size: 24px; font-weight: 800; color: #92400e; margin: 0;">350</p>
+<p style="font-size: 11px; color: #6b7280; margin: 4px 0 0;">🔥 千卡</p>
+</div>
+<div style="flex: 1; background: #f0fdf4; padding: 14px; border-radius: 10px; text-align: center; border: 1px solid #bbf7d0;">
+<p style="font-size: 24px; font-weight: 800; color: #166534; margin: 0;">5</p>
+<p style="font-size: 11px; color: #6b7280; margin: 4px 0 0;">📋 组数</p>
+</div>
+</div>
+
+### 训练内容
+
+| 动作 | 组数 | 次数 | 重量 |
 |------|------|------|------|
-| 指标A | XX | XX | +XX% |
-| 指标B | XX | XX | +XX% |
-| 指标C | XX | XX | -XX% |
+| 深蹲 | 4 | 12 | 60kg |
+| 硬拉 | 4 | 10 | 80kg |
+| 卧推 | 3 | 12 | 50kg |
 
 ---
 
-## 🚧 进行中
+## 🥗 今日饮食
 
-- [ ] 任务一（预计X月X日完成）
-- [ ] 任务二（预计X月X日完成）
+<div style="background: #f0fdf4; padding: 16px; border-radius: 10px; margin: 12px 0; border: 1px solid #bbf7d0;">
+<p style="font-size: 14px; color: #166534; margin: 0 0 6px;">🌅 早餐：全麦面包 + 鸡蛋 + 牛奶</p>
+<p style="font-size: 14px; color: #166534; margin: 0 0 6px;">☀️ 午餐：鸡胸肉 + 糙米 + 西兰花</p>
+<p style="font-size: 14px; color: #166534; margin: 0;">🌙 晚餐：三文鱼 + 沙拉</p>
+</div>
+
+<div style="background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%); padding: 16px; border-radius: 10px; text-align: center; margin: 20px 0;">
+<p style="font-size: 15px; font-weight: 700; color: #fff; margin: 0;">🔥 累计打卡 XX 天 · 继续加油！</p>
+</div>
+`,
+  },
+  {
+    id: 'brand-story',
+    name: '🏢 品牌故事',
+    category: 'marketing',
+    description: '高级灰金 + 品牌时间线 + 数据展示',
+    content: `<div style="background: linear-gradient(135deg, #232526 0%, #414345 100%); padding: 40px 30px; border-radius: 16px; margin-bottom: 20px; text-align: center;">
+<p style="font-size: 14px; color: #d4af37; margin: 0 0 8px; letter-spacing: 4px;">BRAND STORY</p>
+<p style="font-size: 28px; font-weight: 800; color: #fff; margin: 0 0 8px;">品牌名称</p>
+<p style="font-size: 14px; color: rgba(255,255,255,0.6); margin: 0;">一句话品牌理念</p>
+</div>
+
+![品牌形象](https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&fit=crop&auto=format&q=80)
+
+## 📖 我们的故事
+
+一切始于一个简单的想法……
+
+<div style="border-left: 3px solid #d4af37; padding-left: 20px; margin: 20px 0;">
+<div style="margin-bottom: 16px;">
+<p style="font-weight: 700; font-size: 15px; color: #d4af37; margin: 0 0 4px;">2018 · 创立</p>
+<p style="font-size: 13px; color: #64748b; margin: 0;">品牌成立，开始了第一步</p>
+</div>
+<div style="margin-bottom: 16px;">
+<p style="font-weight: 700; font-size: 15px; color: #d4af37; margin: 0 0 4px;">2020 · 突破</p>
+<p style="font-size: 13px; color: #64748b; margin: 0;">用户突破10万，获得A轮融资</p>
+</div>
+<div>
+<p style="font-weight: 700; font-size: 15px; color: #d4af37; margin: 0 0 4px;">2024 · 今天</p>
+<p style="font-size: 13px; color: #64748b; margin: 0;">服务全球用户，持续创新</p>
+</div>
+</div>
 
 ---
 
-## ⚠️ 风险与问题
+## 📊 品牌数据
 
-1. **问题一**：描述 → 解决方案
-2. **问题二**：描述 → 需要支持
+<div style="display: flex; gap: 10px; margin: 16px 0;">
+<div style="flex: 1; background: #1a1a2e; padding: 16px; border-radius: 10px; text-align: center;">
+<p style="font-size: 28px; font-weight: 800; color: #d4af37; margin: 0;">100W+</p>
+<p style="font-size: 11px; color: #94a3b8; margin: 4px 0 0;">用户数</p>
+</div>
+<div style="flex: 1; background: #1a1a2e; padding: 16px; border-radius: 10px; text-align: center;">
+<p style="font-size: 28px; font-weight: 800; color: #d4af37; margin: 0;">50+</p>
+<p style="font-size: 11px; color: #94a3b8; margin: 4px 0 0;">城市覆盖</p>
+</div>
+<div style="flex: 1; background: #1a1a2e; padding: 16px; border-radius: 10px; text-align: center;">
+<p style="font-size: 28px; font-weight: 800; color: #d4af37; margin: 0;">99%</p>
+<p style="font-size: 11px; color: #94a3b8; margin: 4px 0 0;">好评率</p>
+</div>
+</div>
+
+<div style="background: linear-gradient(135deg, #d4af37 0%, #f5d060 100%); padding: 20px; border-radius: 12px; text-align: center; margin: 20px 0;">
+<p style="font-size: 16px; font-weight: 700; color: #1a1a2e; margin: 0;">与我们一起，创造更好的未来</p>
+</div>
+`,
+  },
+  {
+    id: 'mothers-day',
+    name: '💐 母亲节',
+    category: 'festival',
+    description: '粉色温馨 + 感恩卡片 + 花朵装饰',
+    content: `<div style="background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%); padding: 40px 30px; border-radius: 16px; margin-bottom: 20px; text-align: center;">
+<p style="font-size: 40px; margin: 0 0 8px;">💐🌸🌷💕🌷🌸💐</p>
+<p style="font-size: 28px; font-weight: 800; color: #fff; margin: 0 0 8px; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">母亲节快乐</p>
+<p style="font-size: 15px; color: rgba(255,255,255,0.9); margin: 0;">感恩有你 · 爱在心间</p>
+</div>
+
+<div style="background: #fdf2f8; border-left: 4px solid #ec4899; padding: 16px 20px; border-radius: 0 10px 10px 0; margin: 20px 0;">
+<p style="font-size: 15px; color: #9d174d; margin: 0; font-style: italic; line-height: 1.8;">
+"世界上有一种最美丽的声音，那便是母亲的呼唤。" —— 但丁
+</p>
+</div>
+
+![母亲节](https://images.unsplash.com/photo-1462275646964-a0e3c11f18a6?w=800&fit=crop&auto=format&q=80)
+
+## 💝 给妈妈的话
+
+亲爱的妈妈，谢谢你一直以来的付出和陪伴……
+
+<div style="display: flex; gap: 10px; margin: 20px 0;">
+<div style="flex: 1; background: linear-gradient(180deg, #fdf2f8 0%, #fff 100%); padding: 16px; border-radius: 12px; text-align: center; border: 1px solid #fbcfe8;">
+<p style="font-size: 28px; margin: 0 0 6px;">🌹</p>
+<p style="font-weight: 700; font-size: 14px; color: #be185d; margin: 0;">健康平安</p>
+</div>
+<div style="flex: 1; background: linear-gradient(180deg, #faf5ff 0%, #fff 100%); padding: 16px; border-radius: 12px; text-align: center; border: 1px solid #e9d5ff;">
+<p style="font-size: 28px; margin: 0 0 6px;">💖</p>
+<p style="font-weight: 700; font-size: 14px; color: #7c3aed; margin: 0;">幸福快乐</p>
+</div>
+<div style="flex: 1; background: linear-gradient(180deg, #fdf2f8 0%, #fff 100%); padding: 16px; border-radius: 12px; text-align: center; border: 1px solid #fbcfe8;">
+<p style="font-size: 28px; margin: 0 0 6px;">✨</p>
+<p style="font-weight: 700; font-size: 14px; color: #be185d; margin: 0;">永远年轻</p>
+</div>
+</div>
+
+<div style="background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%); padding: 24px; border-radius: 12px; text-align: center; margin: 20px 0;">
+<p style="font-size: 20px; color: #fff; font-weight: 700; margin: 0 0 6px;">妈妈，我爱你 💕</p>
+<p style="font-size: 13px; color: rgba(255,255,255,0.8); margin: 0;">Happy Mother's Day</p>
+</div>
+`,
+  },
+  {
+    id: 'tutorial-guide',
+    name: '📝 教程指南',
+    category: 'knowledge',
+    description: '步骤卡片 + 代码块 + 提示框',
+    content: `<div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 40px 30px; border-radius: 16px; margin-bottom: 20px; text-align: center;">
+<p style="font-size: 14px; color: rgba(255,255,255,0.8); margin: 0 0 6px; letter-spacing: 3px;">📝 手把手教程</p>
+<p style="font-size: 28px; font-weight: 800; color: #fff; margin: 0 0 8px;">教程标题</p>
+<p style="font-size: 13px; color: rgba(255,255,255,0.85); margin: 0;">难度：⭐⭐ · 预计 XX 分钟</p>
+</div>
+
+<div style="background: #eff6ff; border-left: 4px solid #3b82f6; padding: 16px 20px; border-radius: 0 8px 8px 0; margin: 16px 0;">
+<p style="font-size: 14px; color: #1e40af; margin: 0; line-height: 1.8;">📌 <strong style="color: #1e40af;">前置条件：</strong>列出读者需要提前准备的环境或知识。</p>
+</div>
+
+## 第一步：准备工作
+
+详细描述第一步需要做什么……
+
+<div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px 16px; border-radius: 8px; margin: 12px 0;">
+<p style="font-size: 13px; color: #166534; margin: 0;">💡 <strong>小提示：</strong>这里放一些有用的小技巧。</p>
+</div>
+
+## 第二步：核心操作
+
+详细描述核心步骤……
+
+## 第三步：验证结果
+
+如何确认操作成功……
 
 ---
 
-## 📋 下周计划
+<div style="background: #fef3c7; border: 1px solid #fde68a; padding: 16px 20px; border-radius: 10px; margin: 16px 0;">
+<p style="font-size: 14px; color: #92400e; margin: 0; line-height: 1.8;">⚠️ <strong style="color: #92400e;">常见问题：</strong>如果遇到XX错误，请检查XX设置。</p>
+</div>
 
-1. 完成XX
-2. 启动XX
-3. 优化XX
+<p style="text-align: center; font-size: 13px; color: #999; margin-top: 20px;">觉得有用？转发给需要的朋友 📝</p>
+`,
+  },
+  {
+    id: 'interview-qa',
+    name: '🎤 人物访谈',
+    category: 'work',
+    description: '对话气泡 + 人物卡片 + 金句高亮',
+    content: `<div style="background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); padding: 40px 30px; border-radius: 16px; margin-bottom: 20px; text-align: center;">
+<p style="font-size: 14px; color: rgba(255,255,255,0.8); margin: 0 0 6px; letter-spacing: 3px;">🎤 人物专访</p>
+<p style="font-size: 28px; font-weight: 800; color: #fff; margin: 0 0 8px;">对话嘉宾姓名</p>
+<p style="font-size: 13px; color: rgba(255,255,255,0.85); margin: 0;">嘉宾头衔 / 一句话介绍</p>
+</div>
+
+## 👤 嘉宾简介
+
+<div style="display: flex; gap: 16px; margin: 16px 0; align-items: center;">
+<div style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, #a18cd1, #fbc2eb); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+<span style="font-size: 36px;">👤</span>
+</div>
+<div>
+<p style="font-weight: 700; font-size: 16px; color: #333; margin: 0 0 4px;">嘉宾姓名</p>
+<p style="font-size: 13px; color: #666; margin: 0; line-height: 1.6;">XX公司创始人，XX领域专家，曾获得XX荣誉。</p>
+</div>
+</div>
 
 ---
 
-*以上为本周工作总结，如有问题请随时沟通。*
+## 💬 精彩对话
+
+<div style="background: #f3e8ff; padding: 14px 18px; border-radius: 12px 12px 12px 0; margin: 12px 0; max-width: 85%;">
+<p style="font-size: 13px; color: #7c3aed; margin: 0 0 4px; font-weight: 600;">Q：主持人</p>
+<p style="font-size: 14px; color: #4a5568; margin: 0; line-height: 1.8;">请问您是如何开始这段创业之旅的？</p>
+</div>
+
+<div style="background: #eff6ff; padding: 14px 18px; border-radius: 12px 12px 0 12px; margin: 12px 0 12px auto; max-width: 85%;">
+<p style="font-size: 13px; color: #2563eb; margin: 0 0 4px; font-weight: 600;">A：嘉宾</p>
+<p style="font-size: 14px; color: #4a5568; margin: 0; line-height: 1.8;">一切源于一个偶然的机会……</p>
+</div>
+
+<div style="background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); padding: 16px 20px; border-radius: 10px; margin: 16px 0;">
+<p style="font-size: 15px; color: #fff; margin: 0; font-style: italic; line-height: 1.8; text-align: center;">"金句：嘉宾说的最有价值的一句话"</p>
+</div>
+
+<p style="text-align: center; font-size: 13px; color: #999; margin-top: 20px;">更多精彩访谈，敬请关注 🎤</p>
 `,
   },
 ];
 
 // ============================================================
-// 模板管理函数
+// 导出函数
 // ============================================================
 
 /** 获取所有预设模板 */
@@ -1006,13 +893,13 @@ export function getPresetTemplates(): ArticleTemplate[] {
   return PRESET_TEMPLATES;
 }
 
-/** 根据分类获取模板 */
+/** 按分类获取模板 */
 export function getTemplatesByCategory(category: string): ArticleTemplate[] {
   if (category === 'all') return PRESET_TEMPLATES;
   return PRESET_TEMPLATES.filter((t) => t.category === category);
 }
 
-/** 根据 ID 获取模板 */
+/** 按 ID 获取单个模板 */
 export function getTemplate(id: string): ArticleTemplate | undefined {
   return PRESET_TEMPLATES.find((t) => t.id === id);
 }
