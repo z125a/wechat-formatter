@@ -1,5 +1,6 @@
-import { useEffect, useCallback } from 'react';
-import { getPresetTemplates } from '../core/template-manager';
+import { useState, useEffect, useCallback } from 'react';
+import { getPresetTemplates, getTemplatesByCategory, TEMPLATE_CATEGORIES } from '../core/template-manager';
+import type { TemplateCategoryKey } from '../core/template-manager';
 
 export interface TemplateDialogProps {
   open: boolean;
@@ -8,6 +9,8 @@ export interface TemplateDialogProps {
 }
 
 export function TemplateDialog({ open, onSelect, onCancel }: TemplateDialogProps) {
+  const [activeCategory, setActiveCategory] = useState<TemplateCategoryKey>('all');
+
   const handleCancel = useCallback(() => {
     onCancel();
   }, [onCancel]);
@@ -15,9 +18,7 @@ export function TemplateDialog({ open, onSelect, onCancel }: TemplateDialogProps
   useEffect(() => {
     if (!open) return;
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        handleCancel();
-      }
+      if (e.key === 'Escape') handleCancel();
     };
     document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
@@ -25,68 +26,75 @@ export function TemplateDialog({ open, onSelect, onCancel }: TemplateDialogProps
 
   if (!open) return null;
 
-  const templates = getPresetTemplates();
+  const templates = getTemplatesByCategory(activeCategory);
 
   return (
     <div
       data-testid="template-dialog-overlay"
       onClick={handleCancel}
-      style={{
-        position: 'fixed',
-        inset: 0,
-        backgroundColor: 'rgba(0,0,0,0.4)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        zIndex: 1100,
-      }}
+      className="dialog-overlay"
     >
       <div
         role="dialog"
         aria-label="选择模板"
         onClick={(e) => e.stopPropagation()}
-        style={{
-          background: '#fff',
-          borderRadius: '8px',
-          padding: '24px',
-          minWidth: '360px',
-          boxShadow: '0 4px 24px rgba(0,0,0,0.18)',
-        }}
+        className="dialog-content"
+        style={{ maxWidth: '640px', maxHeight: '85vh' }}
       >
-        <h3 style={{ margin: '0 0 16px', fontSize: '16px' }}>选择文章模板</h3>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          {templates.map((t) => (
+        <div className="dialog-header">选择文章模板</div>
+
+        {/* Category tabs */}
+        <div style={{ display: 'flex', gap: '6px', padding: '12px 24px', flexWrap: 'wrap' }}>
+          {TEMPLATE_CATEGORIES.map((cat) => (
             <button
-              key={t.id}
-              data-testid={`template-item-${t.id}`}
-              onClick={() => onSelect(t.id)}
+              key={cat.key}
+              onClick={() => setActiveCategory(cat.key as TemplateCategoryKey)}
               style={{
-                textAlign: 'left',
-                padding: '12px',
-                border: '1px solid #e0e0e0',
-                borderRadius: '6px',
-                background: '#fafafa',
+                padding: '5px 14px',
+                fontSize: '12px',
+                fontWeight: activeCategory === cat.key ? 600 : 400,
+                border: '1px solid',
+                borderColor: activeCategory === cat.key ? 'var(--primary)' : 'var(--border)',
+                borderRadius: 'var(--radius-full)',
+                background: activeCategory === cat.key ? 'rgba(99,102,241,0.08)' : 'var(--surface)',
+                color: activeCategory === cat.key ? 'var(--primary)' : 'var(--text-secondary)',
                 cursor: 'pointer',
-                fontSize: '14px',
+                transition: 'all 150ms ease',
               }}
             >
-              <div style={{ fontWeight: 600, marginBottom: '4px' }}>{t.name}</div>
-              <div style={{ color: '#666', fontSize: '12px' }}>{t.description}</div>
+              {cat.label}
             </button>
           ))}
         </div>
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>
-          <button
-            onClick={handleCancel}
-            style={{
-              padding: '8px 16px',
-              border: '1px solid #ccc',
-              borderRadius: '4px',
-              background: '#fff',
-              cursor: 'pointer',
-              fontSize: '14px',
-            }}
-          >
+
+        {/* Template list */}
+        <div className="dialog-body" style={{ maxHeight: '55vh', overflowY: 'auto' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+            {templates.map((t) => (
+              <button
+                key={t.id}
+                data-testid={`template-item-${t.id}`}
+                onClick={() => onSelect(t.id)}
+                style={{
+                  textAlign: 'left',
+                  padding: '14px',
+                  border: '1px solid var(--border)',
+                  borderRadius: 'var(--radius-md)',
+                  background: 'var(--surface-dim)',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                  transition: 'all 150ms ease',
+                }}
+              >
+                <div style={{ fontWeight: 600, marginBottom: '4px' }}>{t.name}</div>
+                <div style={{ color: 'var(--text-muted)', fontSize: '11px', lineHeight: 1.4 }}>{t.description}</div>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="dialog-footer">
+          <button onClick={handleCancel} className="dialog-btn dialog-btn-secondary">
             取消
           </button>
         </div>

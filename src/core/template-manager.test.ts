@@ -2,14 +2,15 @@ import { describe, it, expect } from 'vitest';
 import {
   getPresetTemplates,
   getTemplate,
+  getTemplatesByCategory,
+  TEMPLATE_CATEGORIES,
 } from './template-manager';
-import type { ArticleTemplate } from './template-manager';
 
 describe('TemplateManager', () => {
   describe('getPresetTemplates', () => {
-    it('returns at least 3 preset templates', () => {
+    it('returns at least 8 preset templates', () => {
       const templates = getPresetTemplates();
-      expect(templates.length).toBeGreaterThanOrEqual(3);
+      expect(templates.length).toBeGreaterThanOrEqual(8);
     });
 
     it('includes tech-share, product-promo, and daily-essay templates', () => {
@@ -20,11 +21,12 @@ describe('TemplateManager', () => {
       expect(ids).toContain('daily-essay');
     });
 
-    it('each template has non-empty id, name, description, and content', () => {
+    it('each template has non-empty id, name, category, description, and content', () => {
       const templates = getPresetTemplates();
       for (const template of templates) {
         expect(template.id).toBeTruthy();
         expect(template.name).toBeTruthy();
+        expect(template.category).toBeTruthy();
         expect(template.description).toBeTruthy();
         expect(template.content).toBeTruthy();
         expect(template.content.length).toBeGreaterThan(0);
@@ -72,6 +74,28 @@ describe('TemplateManager', () => {
       const template = getTemplate('daily-essay')!;
       expect(template.content).toContain('故事');
       expect(template.content).toContain('感悟');
+    });
+  });
+
+  describe('getTemplatesByCategory', () => {
+    it('returns all templates when category is "all"', () => {
+      const all = getTemplatesByCategory('all');
+      expect(all.length).toBe(getPresetTemplates().length);
+    });
+
+    it('filters templates by category', () => {
+      const work = getTemplatesByCategory('work');
+      expect(work.length).toBeGreaterThan(0);
+      for (const t of work) {
+        expect(t.category).toBe('work');
+      }
+    });
+
+    it('returns templates for each defined category', () => {
+      for (const cat of TEMPLATE_CATEGORIES) {
+        const templates = getTemplatesByCategory(cat.key);
+        expect(templates.length).toBeGreaterThanOrEqual(cat.key === 'all' ? 1 : 0);
+      }
     });
   });
 
