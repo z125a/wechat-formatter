@@ -4,7 +4,6 @@ import { StylePanel } from './StylePanel';
 import { useAppStore } from '../store/app-store';
 import { getTheme } from '../core/theme-manager';
 
-// Helper: expand the collapsed panel before interacting
 function expandPanel() {
   fireEvent.click(screen.getByText(/展开/));
 }
@@ -19,9 +18,12 @@ describe('StylePanel', () => {
     expandPanel();
     expect(screen.getByLabelText('字号')).toBeInTheDocument();
     expect(screen.getByLabelText('行高')).toBeInTheDocument();
+    expect(screen.getByLabelText('字间距')).toBeInTheDocument();
+    expect(screen.getByLabelText('段间距')).toBeInTheDocument();
     expect(screen.getByLabelText('正文色')).toBeInTheDocument();
     expect(screen.getByLabelText('标题色')).toBeInTheDocument();
     expect(screen.getByLabelText('链接色')).toBeInTheDocument();
+    expect(screen.getByLabelText('首行缩进')).toBeInTheDocument();
   });
 
   it('displays current theme default values', () => {
@@ -70,6 +72,30 @@ describe('StylePanel', () => {
     expect(useAppStore.getState().customStyles.linkColor).toBe('#0000ff');
   });
 
+  it('updates letterSpacing', () => {
+    render(<StylePanel />);
+    expandPanel();
+    fireEvent.change(screen.getByLabelText('字间距'), { target: { value: '1.5' } });
+    expect(useAppStore.getState().customStyles.letterSpacing).toBe(1.5);
+  });
+
+  it('updates paragraphSpacing', () => {
+    render(<StylePanel />);
+    expandPanel();
+    fireEvent.change(screen.getByLabelText('段间距'), { target: { value: '24' } });
+    expect(useAppStore.getState().customStyles.paragraphSpacing).toBe(24);
+  });
+
+  it('toggles firstLineIndent', () => {
+    render(<StylePanel />);
+    expandPanel();
+    const btn = screen.getByLabelText('首行缩进');
+    fireEvent.click(btn);
+    expect(useAppStore.getState().customStyles.firstLineIndent).toBe(true);
+    fireEvent.click(btn);
+    expect(useAppStore.getState().customStyles.firstLineIndent).toBe(false);
+  });
+
   it('clamps fontSize to min 12', () => {
     render(<StylePanel />);
     expandPanel();
@@ -110,7 +136,6 @@ describe('StylePanel', () => {
     const { rerender } = render(<StylePanel />);
     rerender(<StylePanel />);
 
-    // Expand again after rerender
     const expandBtns = screen.getAllByText(/展开/);
     expandBtns.forEach(btn => fireEvent.click(btn));
 

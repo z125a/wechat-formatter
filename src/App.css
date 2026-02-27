@@ -251,6 +251,69 @@
   background: none;
 }
 
+/* --- Style Panel Grid --- */
+.style-panel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 16px;
+}
+
+.style-panel-indent-btn {
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 4px;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.7);
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.style-panel-indent-btn.active {
+  background: rgba(99,102,241,0.3);
+  border-color: var(--primary-light);
+  color: #fff;
+}
+
+/* --- Editor Toolbar (Markdown shortcuts) --- */
+.editor-toolbar {
+  display: flex;
+  gap: 2px;
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-bottom: none;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  background: var(--surface-dim);
+  flex-wrap: wrap;
+}
+
+.editor-toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 28px;
+  font-size: 12px;
+  font-weight: 600;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 120ms ease;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+.editor-toolbar-btn:hover {
+  background: var(--surface-hover);
+  color: var(--primary);
+}
+
+.editor-toolbar-btn:active {
+  transform: scale(0.92);
+}
+
 /* --- Editor --- */
 .editor-textarea {
   flex: 1;
@@ -260,7 +323,8 @@
   line-height: 1.7;
   padding: 20px;
   border: 1px solid var(--border);
-  border-radius: var(--radius-md);
+  border-top: none;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
   outline: none;
   box-sizing: border-box;
   background: var(--surface);
@@ -295,6 +359,11 @@
   color: var(--danger);
 }
 
+.editor-status-info {
+  color: var(--text-muted);
+  margin-right: 12px;
+}
+
 /* --- Preview --- */
 .preview-container {
   height: 100%;
@@ -305,6 +374,15 @@
   box-sizing: border-box;
   background: var(--surface);
   transition: border-color 200ms ease;
+}
+
+.preview-stats {
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 0 0 12px;
+  margin-bottom: 12px;
+  border-bottom: 1px dashed var(--border);
+  text-align: right;
 }
 
 .preview-empty {

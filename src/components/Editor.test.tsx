@@ -18,7 +18,6 @@ describe('Editor', () => {
 
   it('displays character count when empty', () => {
     render(<Editor />);
-    // toLocaleString() formats numbers with commas
     expect(screen.getByText(`0 / ${MAX_CHAR_LIMIT.toLocaleString()}`)).toBeInTheDocument();
   });
 
@@ -52,5 +51,18 @@ describe('Editor', () => {
     render(<Editor />);
     const textarea = screen.getByRole('textbox', { name: /markdown/i });
     expect(textarea).toHaveValue('# Title');
+  });
+
+  it('renders the editor toolbar with markdown shortcuts', () => {
+    render(<Editor />);
+    expect(screen.getByLabelText('加粗')).toBeInTheDocument();
+    expect(screen.getByLabelText('斜体')).toBeInTheDocument();
+    expect(screen.getByLabelText('链接')).toBeInTheDocument();
+  });
+
+  it('shows line count', () => {
+    useAppStore.setState({ markdown: 'line1\nline2\nline3' });
+    render(<Editor />);
+    expect(screen.getByText('3 行')).toBeInTheDocument();
   });
 });

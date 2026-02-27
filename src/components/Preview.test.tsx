@@ -40,4 +40,11 @@ describe('Preview', () => {
     render(<Preview />);
     expect(screen.queryByText('预览区域')).not.toBeInTheDocument();
   });
+
+  it('shows reading time and word count when content exists', () => {
+    useAppStore.setState({ markdown: 'a'.repeat(800), formattedHtml: '<p>test</p>' });
+    render(<Preview />);
+    expect(screen.getByText(/分钟阅读/)).toBeInTheDocument();
+    expect(screen.getByText(/800 字/)).toBeInTheDocument();
+  });
 });
