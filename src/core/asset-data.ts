@@ -351,6 +351,244 @@ export const EMOJIS: EmojiItem[] = [
 ];
 
 // ============================================================
+// GIF 动图素材
+// ============================================================
+
+export const GIFS: AssetItem[] = [
+  {
+    id: 'gif-thumbs-up',
+    name: '竖大拇指',
+    category: 'gif',
+    tags: ['点赞', '大拇指', '好的', '赞', 'thumbs up'],
+    content: '\n<img src="https://media.giphy.com/media/111ebonMs90YLu/giphy.gif" alt="竖大拇指" style="max-width: 200px; border-radius: 8px; margin: 8px 0;" />\n',
+    preview: '<img src="https://media.giphy.com/media/111ebonMs90YLu/200w.gif" alt="竖大拇指" style="width: 80px; height: 60px; object-fit: cover; border-radius: 6px;" />',
+  },
+  {
+    id: 'gif-clap',
+    name: '鼓掌',
+    category: 'gif',
+    tags: ['鼓掌', '掌声', '厉害', 'clap', '棒'],
+    content: '\n<img src="https://media.giphy.com/media/NEvPzZ8bd1V4Y/giphy.gif" alt="鼓掌" style="max-width: 200px; border-radius: 8px; margin: 8px 0;" />\n',
+    preview: '<img src="https://media.giphy.com/media/NEvPzZ8bd1V4Y/200w.gif" alt="鼓掌" style="width: 80px; height: 60px; object-fit: cover; border-radius: 6px;" />',
+  },
+  {
+    id: 'gif-celebrate',
+    name: '庆祝撒花',
+    category: 'gif',
+    tags: ['庆祝', '撒花', '开心', '派对', 'celebrate'],
+    content: '\n<img src="https://media.giphy.com/media/g9582DNuQppxC/giphy.gif" alt="庆祝撒花" style="max-width: 200px; border-radius: 8px; margin: 8px 0;" />\n',
+    preview: '<img src="https://media.giphy.com/media/g9582DNuQppxC/200w.gif" alt="庆祝撒花" style="width: 80px; height: 60px; object-fit: cover; border-radius: 6px;" />',
+  },
+  {
+    id: 'gif-mind-blown',
+    name: '脑洞大开',
+    category: 'gif',
+    tags: ['震惊', '脑洞', '惊讶', 'mind blown', '厉害'],
+    content: '\n<img src="https://media.giphy.com/media/xT0xeJpnrWC3XWblEk/giphy.gif" alt="脑洞大开" style="max-width: 200px; border-radius: 8px; margin: 8px 0;" />\n',
+    preview: '<img src="https://media.giphy.com/media/xT0xeJpnrWC3XWblEk/200w.gif" alt="脑洞大开" style="width: 80px; height: 60px; object-fit: cover; border-radius: 6px;" />',
+  },
+  {
+    id: 'gif-typing',
+    name: '疯狂打字',
+    category: 'gif',
+    tags: ['打字', '工作', '忙碌', 'typing', '码字'],
+    content: '\n<img src="https://media.giphy.com/media/LmNwrBhejkK9EFP504/giphy.gif" alt="疯狂打字" style="max-width: 200px; border-radius: 8px; margin: 8px 0;" />\n',
+    preview: '<img src="https://media.giphy.com/media/LmNwrBhejkK9EFP504/200w.gif" alt="疯狂打字" style="width: 80px; height: 60px; object-fit: cover; border-radius: 6px;" />',
+  },
+  {
+    id: 'gif-thinking',
+    name: '思考中',
+    category: 'gif',
+    tags: ['思考', '想', '嗯', 'thinking', '疑问'],
+    content: '\n<img src="https://media.giphy.com/media/a5viI92PAF89q/giphy.gif" alt="思考中" style="max-width: 200px; border-radius: 8px; margin: 8px 0;" />\n',
+    preview: '<img src="https://media.giphy.com/media/a5viI92PAF89q/200w.gif" alt="思考中" style="width: 80px; height: 60px; object-fit: cover; border-radius: 6px;" />',
+  },
+  {
+    id: 'gif-wow',
+    name: '哇哦',
+    category: 'gif',
+    tags: ['哇', '惊叹', '厉害', 'wow', '震惊'],
+    content: '\n<img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="哇哦" style="max-width: 200px; border-radius: 8px; margin: 8px 0;" />\n',
+    preview: '<img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/200w.gif" alt="哇哦" style="width: 80px; height: 60px; object-fit: cover; border-radius: 6px;" />',
+  },
+  {
+    id: 'gif-dance',
+    name: '跳舞',
+    category: 'gif',
+    tags: ['跳舞', '开心', '嗨', 'dance', '快乐'],
+    content: '\n<img src="https://media.giphy.com/media/l0HlNQ03J5JxX6lva/giphy.gif" alt="跳舞" style="max-width: 200px; border-radius: 8px; margin: 8px 0;" />\n',
+    preview: '<img src="https://media.giphy.com/media/l0HlNQ03J5JxX6lva/200w.gif" alt="跳舞" style="width: 80px; height: 60px; object-fit: cover; border-radius: 6px;" />',
+  },
+  {
+    id: 'gif-fire',
+    name: '燃起来了',
+    category: 'gif',
+    tags: ['火', '燃', '热门', 'fire', '厉害'],
+    content: '\n<img src="https://media.giphy.com/media/j2pOGeGYKe2xCCKwfi/giphy.gif" alt="燃起来了" style="max-width: 200px; border-radius: 8px; margin: 8px 0;" />\n',
+    preview: '<img src="https://media.giphy.com/media/j2pOGeGYKe2xCCKwfi/200w.gif" alt="燃起来了" style="width: 80px; height: 60px; object-fit: cover; border-radius: 6px;" />',
+  },
+  {
+    id: 'gif-love',
+    name: '比心',
+    category: 'gif',
+    tags: ['爱', '比心', '喜欢', 'love', '心'],
+    content: '\n<img src="https://media.giphy.com/media/26BRv0ThflsHCqDrG/giphy.gif" alt="比心" style="max-width: 200px; border-radius: 8px; margin: 8px 0;" />\n',
+    preview: '<img src="https://media.giphy.com/media/26BRv0ThflsHCqDrG/200w.gif" alt="比心" style="width: 80px; height: 60px; object-fit: cover; border-radius: 6px;" />',
+  },
+  {
+    id: 'gif-rocket',
+    name: '火箭发射',
+    category: 'gif',
+    tags: ['火箭', '发射', '起飞', 'rocket', '冲'],
+    content: '\n<img src="https://media.giphy.com/media/mi6DsSSNKDbUY/giphy.gif" alt="火箭发射" style="max-width: 200px; border-radius: 8px; margin: 8px 0;" />\n',
+    preview: '<img src="https://media.giphy.com/media/mi6DsSSNKDbUY/200w.gif" alt="火箭发射" style="width: 80px; height: 60px; object-fit: cover; border-radius: 6px;" />',
+  },
+  {
+    id: 'gif-coffee',
+    name: '喝咖啡',
+    category: 'gif',
+    tags: ['咖啡', '喝', '休息', 'coffee', '摸鱼'],
+    content: '\n<img src="https://media.giphy.com/media/drj6PcnAMfJ7O/giphy.gif" alt="喝咖啡" style="max-width: 200px; border-radius: 8px; margin: 8px 0;" />\n',
+    preview: '<img src="https://media.giphy.com/media/drj6PcnAMfJ7O/200w.gif" alt="喝咖啡" style="width: 80px; height: 60px; object-fit: cover; border-radius: 6px;" />',
+  },
+];
+
+// ============================================================
+// 可爱搞怪表情包素材
+// ============================================================
+
+export const STICKERS: AssetItem[] = [
+  {
+    id: 'sticker-cat-cute',
+    name: '可爱猫咪',
+    category: 'sticker',
+    tags: ['猫', '可爱', '萌', 'cute', 'cat'],
+    content: '\n<img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" alt="可爱猫咪" style="max-width: 150px; border-radius: 12px; margin: 8px 0;" />\n',
+    preview: '<img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/200w.gif" alt="可爱猫咪" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px;" />',
+  },
+  {
+    id: 'sticker-dog-shake',
+    name: '狗狗摇头',
+    category: 'sticker',
+    tags: ['狗', '摇头', '搞笑', 'dog', '可爱'],
+    content: '\n<img src="https://media.giphy.com/media/4Zo41lhzKt6iZ8xff9/giphy.gif" alt="狗狗摇头" style="max-width: 150px; border-radius: 12px; margin: 8px 0;" />\n',
+    preview: '<img src="https://media.giphy.com/media/4Zo41lhzKt6iZ8xff9/200w.gif" alt="狗狗摇头" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px;" />',
+  },
+  {
+    id: 'sticker-panda-roll',
+    name: '熊猫打滚',
+    category: 'sticker',
+    tags: ['熊猫', '打滚', '可爱', 'panda', '搞笑'],
+    content: '\n<img src="https://media.giphy.com/media/EatwJZRUIv41G/giphy.gif" alt="熊猫打滚" style="max-width: 150px; border-radius: 12px; margin: 8px 0;" />\n',
+    preview: '<img src="https://media.giphy.com/media/EatwJZRUIv41G/200w.gif" alt="熊猫打滚" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px;" />',
+  },
+  {
+    id: 'sticker-bunny-peek',
+    name: '兔子偷看',
+    category: 'sticker',
+    tags: ['兔子', '偷看', '害羞', 'bunny', '可爱'],
+    content: '\n<img src="https://media.giphy.com/media/xUPGcMzfkOPknzp3kQ/giphy.gif" alt="兔子偷看" style="max-width: 150px; border-radius: 12px; margin: 8px 0;" />\n',
+    preview: '<img src="https://media.giphy.com/media/xUPGcMzfkOPknzp3kQ/200w.gif" alt="兔子偷看" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px;" />',
+  },
+  {
+    id: 'sticker-cat-typing',
+    name: '猫咪打字',
+    category: 'sticker',
+    tags: ['猫', '打字', '工作', '搞笑', 'typing cat'],
+    content: '\n<img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" alt="猫咪打字" style="max-width: 150px; border-radius: 12px; margin: 8px 0;" />\n',
+    preview: '<img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/200w.gif" alt="猫咪打字" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px;" />',
+  },
+  {
+    id: 'sticker-frog-sip',
+    name: '青蛙喝茶',
+    category: 'sticker',
+    tags: ['青蛙', '喝茶', '淡定', 'frog', '搞怪'],
+    content: '\n<img src="https://media.giphy.com/media/kFgzrTt798d2w/giphy.gif" alt="青蛙喝茶" style="max-width: 150px; border-radius: 12px; margin: 8px 0;" />\n',
+    preview: '<img src="https://media.giphy.com/media/kFgzrTt798d2w/200w.gif" alt="青蛙喝茶" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px;" />',
+  },
+  {
+    id: 'sticker-shiba-wow',
+    name: '柴犬惊讶',
+    category: 'sticker',
+    tags: ['柴犬', '惊讶', 'doge', 'shiba', '搞笑'],
+    content: '\n<img src="https://media.giphy.com/media/9rtpurjbqiqZXbBBet/giphy.gif" alt="柴犬惊讶" style="max-width: 150px; border-radius: 12px; margin: 8px 0;" />\n',
+    preview: '<img src="https://media.giphy.com/media/9rtpurjbqiqZXbBBet/200w.gif" alt="柴犬惊讶" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px;" />',
+  },
+  {
+    id: 'sticker-penguin-dance',
+    name: '企鹅跳舞',
+    category: 'sticker',
+    tags: ['企鹅', '跳舞', '可爱', 'penguin', '开心'],
+    content: '\n<img src="https://media.giphy.com/media/berTqWdVEbcOY/giphy.gif" alt="企鹅跳舞" style="max-width: 150px; border-radius: 12px; margin: 8px 0;" />\n',
+    preview: '<img src="https://media.giphy.com/media/berTqWdVEbcOY/200w.gif" alt="企鹅跳舞" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px;" />',
+  },
+  {
+    id: 'sticker-cat-heart',
+    name: '猫咪比心',
+    category: 'sticker',
+    tags: ['猫', '比心', '爱', 'heart', '可爱'],
+    content: '\n<img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" alt="猫咪比心" style="max-width: 150px; border-radius: 12px; margin: 8px 0;" />\n',
+    preview: '<img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/200w.gif" alt="猫咪比心" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px;" />',
+  },
+  {
+    id: 'sticker-hamster-eat',
+    name: '仓鼠吃东西',
+    category: 'sticker',
+    tags: ['仓鼠', '吃', '可爱', 'hamster', '萌'],
+    content: '\n<img src="https://media.giphy.com/media/rGOPHBBQ3ESYA/giphy.gif" alt="仓鼠吃东西" style="max-width: 150px; border-radius: 12px; margin: 8px 0;" />\n',
+    preview: '<img src="https://media.giphy.com/media/rGOPHBBQ3ESYA/200w.gif" alt="仓鼠吃东西" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px;" />',
+  },
+  {
+    id: 'sticker-duck-dance',
+    name: '鸭子摇摆',
+    category: 'sticker',
+    tags: ['鸭子', '摇摆', '搞笑', 'duck', '跳舞'],
+    content: '\n<img src="https://media.giphy.com/media/sIPfJfe2MbFDO/giphy.gif" alt="鸭子摇摆" style="max-width: 150px; border-radius: 12px; margin: 8px 0;" />\n',
+    preview: '<img src="https://media.giphy.com/media/sIPfJfe2MbFDO/200w.gif" alt="鸭子摇摆" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px;" />',
+  },
+  {
+    id: 'sticker-bear-wave',
+    name: '小熊挥手',
+    category: 'sticker',
+    tags: ['熊', '挥手', '你好', 'bear', '可爱'],
+    content: '\n<img src="https://media.giphy.com/media/IThjAlJnD9WNO/giphy.gif" alt="小熊挥手" style="max-width: 150px; border-radius: 12px; margin: 8px 0;" />\n',
+    preview: '<img src="https://media.giphy.com/media/IThjAlJnD9WNO/200w.gif" alt="小熊挥手" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px;" />',
+  },
+  {
+    id: 'sticker-cat-nope',
+    name: '猫咪拒绝',
+    category: 'sticker',
+    tags: ['猫', '拒绝', '不要', 'nope', '搞笑'],
+    content: '\n<img src="https://media.giphy.com/media/wpoLqr5FT1sY0/giphy.gif" alt="猫咪拒绝" style="max-width: 150px; border-radius: 12px; margin: 8px 0;" />\n',
+    preview: '<img src="https://media.giphy.com/media/wpoLqr5FT1sY0/200w.gif" alt="猫咪拒绝" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px;" />',
+  },
+  {
+    id: 'sticker-corgi-butt',
+    name: '柯基屁股',
+    category: 'sticker',
+    tags: ['柯基', '屁股', '可爱', 'corgi', '搞笑'],
+    content: '\n<img src="https://media.giphy.com/media/mCRJDo24UvJMA/giphy.gif" alt="柯基屁股" style="max-width: 150px; border-radius: 12px; margin: 8px 0;" />\n',
+    preview: '<img src="https://media.giphy.com/media/mCRJDo24UvJMA/200w.gif" alt="柯基屁股" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px;" />',
+  },
+  {
+    id: 'sticker-owl-blink',
+    name: '猫头鹰眨眼',
+    category: 'sticker',
+    tags: ['猫头鹰', '眨眼', '呆萌', 'owl', '可爱'],
+    content: '\n<img src="https://media.giphy.com/media/Nx85vtTY70T3W/giphy.gif" alt="猫头鹰眨眼" style="max-width: 150px; border-radius: 12px; margin: 8px 0;" />\n',
+    preview: '<img src="https://media.giphy.com/media/Nx85vtTY70T3W/200w.gif" alt="猫头鹰眨眼" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px;" />',
+  },
+  {
+    id: 'sticker-sloth-chill',
+    name: '树懒躺平',
+    category: 'sticker',
+    tags: ['树懒', '躺平', '摸鱼', 'sloth', '搞笑'],
+    content: '\n<img src="https://media.giphy.com/media/3oKIPbNb1vWdftiVLq/giphy.gif" alt="树懒躺平" style="max-width: 150px; border-radius: 12px; margin: 8px 0;" />\n',
+    preview: '<img src="https://media.giphy.com/media/3oKIPbNb1vWdftiVLq/200w.gif" alt="树懒躺平" style="width: 70px; height: 70px; object-fit: cover; border-radius: 8px;" />',
+  },
+];
+
+// ============================================================
 // 图片分类与 Unsplash URL 构建
 // ============================================================
 

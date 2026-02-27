@@ -1,5 +1,5 @@
 import type { AssetCategory, AssetItem, ImageAsset, ImageCategory } from '../types';
-import { DIVIDERS, EMOJIS, IMAGE_ASSETS, TEXT_BLOCKS } from './asset-data';
+import { DIVIDERS, EMOJIS, GIFS, IMAGE_ASSETS, STICKERS, TEXT_BLOCKS } from './asset-data';
 import { buildImageMarkdown } from './image-inserter';
 
 /**
@@ -42,6 +42,10 @@ export function getAssetsByCategory(category: AssetCategory): AssetItem[] {
       return EMOJIS.map(emojiToAssetItem);
     case 'image':
       return Object.values(IMAGE_ASSETS).flat().map(imageToAssetItem);
+    case 'gif':
+      return GIFS;
+    case 'sticker':
+      return STICKERS;
     default:
       return [];
   }

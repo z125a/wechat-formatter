@@ -15,10 +15,12 @@ export interface AssetPanelProps {
   onInsert: (content: string) => void;
 }
 
-type TabType = 'image' | 'divider' | 'emoji' | 'text-block';
+type TabType = 'image' | 'divider' | 'emoji' | 'text-block' | 'gif' | 'sticker';
 
 const TABS: { key: TabType; label: string }[] = [
   { key: 'image', label: '🖼️ 图片' },
+  { key: 'gif', label: '🎬 动图' },
+  { key: 'sticker', label: '🐱 表情包' },
   { key: 'divider', label: '✂️ 分割线' },
   { key: 'emoji', label: '😀 Emoji' },
   { key: 'text-block', label: '📝 文字块' },
@@ -190,12 +192,64 @@ export function AssetPanel({ open, onClose, onInsert }: AssetPanelProps) {
     );
   };
 
+  const renderGifTab = () => {
+    const items = searchQuery.trim()
+      ? searchAssets('gif', searchQuery) : getAssetsByCategory('gif');
+    return (
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+        {items.map((item) => (
+          <div key={item.id} data-testid={`gif-item-${item.id}`}
+            onClick={() => onInsert(item.content)}
+            style={{ cursor: 'pointer', borderRadius: 'var(--radius-md)', overflow: 'hidden',
+              border: '1px solid var(--border)', background: 'var(--surface-dim)',
+              transition: 'all 150ms ease' }}
+            title={item.name}>
+            <div dangerouslySetInnerHTML={{ __html: item.preview || '' }}
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center',
+                minHeight: '70px', background: 'var(--surface-hover)' }} />
+            <div style={{ padding: '5px 8px', fontSize: '11px', color: 'var(--text-secondary)',
+              textAlign: 'center', fontWeight: 500 }}>
+              {item.name}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const renderStickerTab = () => {
+    const items = searchQuery.trim()
+      ? searchAssets('sticker', searchQuery) : getAssetsByCategory('sticker');
+    return (
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '6px' }}>
+        {items.map((item) => (
+          <div key={item.id} data-testid={`sticker-item-${item.id}`}
+            onClick={() => onInsert(item.content)}
+            style={{ cursor: 'pointer', borderRadius: 'var(--radius-md)', overflow: 'hidden',
+              border: '1px solid var(--border)', background: 'var(--surface-dim)',
+              transition: 'all 150ms ease', textAlign: 'center' }}
+            title={item.name}>
+            <div dangerouslySetInnerHTML={{ __html: item.preview || '' }}
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center',
+                minHeight: '70px', background: 'var(--surface-hover)' }} />
+            <div style={{ padding: '3px 4px', fontSize: '10px', color: 'var(--text-secondary)',
+              fontWeight: 500 }}>
+              {item.name}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   const renderTabContent = () => {
     switch (activeTab) {
       case 'image': return renderImageTab();
       case 'divider': return renderDividerTab();
       case 'emoji': return renderEmojiTab();
       case 'text-block': return renderTextBlockTab();
+      case 'gif': return renderGifTab();
+      case 'sticker': return renderStickerTab();
       default: return null;
     }
   };

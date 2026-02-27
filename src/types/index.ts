@@ -110,7 +110,7 @@ export interface AppState {
 // --- 素材库类型 ---
 
 /** 素材分类 */
-export type AssetCategory = 'image' | 'divider' | 'emoji' | 'text-block';
+export type AssetCategory = 'image' | 'divider' | 'emoji' | 'text-block' | 'gif' | 'sticker';
 
 /** 素材项基础结构 */
 export interface AssetItem {
