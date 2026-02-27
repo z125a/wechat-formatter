@@ -254,87 +254,115 @@ export const IMAGE_CATEGORY_NAMES: Record<ImageCategory, string> = {
 };
 
 /**
- * 构建 Lorem Picsum 图片 URL。
- * 使用固定 seed 保证同一素材每次返回相同图片。
+ * 构建 Unsplash 图片直链 URL。
+ * 使用真实 Unsplash photo ID，图片内容与描述精确匹配。
  */
-export function buildPicsumUrl(seed: string, width: number, height: number): string {
-  return `https://picsum.photos/seed/${encodeURIComponent(seed)}/${width}/${height}`;
+function unsplashUrl(photoId: string, width: number): string {
+  return `https://images.unsplash.com/${photoId}?w=${width}&fit=crop&auto=format&q=80`;
 }
 
-/** 根据 seed 构建图片素材 */
+/** 根据 Unsplash photo ID 构建图片素材 */
 function buildImageAsset(
   category: ImageCategory,
   id: string,
   name: string,
-  seed: string,
+  photoId: string,
   alt: string,
 ): ImageAsset {
   return {
     id,
     name,
     category,
-    thumbnailUrl: buildPicsumUrl(seed, 400, 300),
-    fullUrl: buildPicsumUrl(seed, 1080, 720),
+    thumbnailUrl: unsplashUrl(photoId, 400),
+    fullUrl: unsplashUrl(photoId, 1080),
     alt,
   };
 }
 
-/** 所有图片分类的预定义素材 */
+/** 所有图片分类的预定义素材（每分类 10 张，共 70 张） */
 export const IMAGE_ASSETS: Record<ImageCategory, ImageAsset[]> = {
   technology: [
-    buildImageAsset('technology', 'img-tech-laptop', '笔记本电脑', 'tech-laptop', '笔记本电脑'),
-    buildImageAsset('technology', 'img-tech-coding', '编程代码', 'tech-coding', '编程代码'),
-    buildImageAsset('technology', 'img-tech-server', '服务器', 'tech-server', '服务器机房'),
-    buildImageAsset('technology', 'img-tech-circuit', '电路板', 'tech-circuit', '电路板特写'),
-    buildImageAsset('technology', 'img-tech-robot', '机器人', 'tech-robot', '机器人'),
-    buildImageAsset('technology', 'img-tech-ai', '人工智能', 'tech-ai', '人工智能'),
+    buildImageAsset('technology', 'img-tech-01', '笔记本电脑', 'photo-1496181133206-80ce9b88a853', '银色笔记本电脑放在桌面上'),
+    buildImageAsset('technology', 'img-tech-02', '编程代码', 'photo-1461749280684-dccba630e2f6', '屏幕上的编程代码'),
+    buildImageAsset('technology', 'img-tech-03', '服务器机房', 'photo-1558494949-ef010cbdcc31', '数据中心服务器机架'),
+    buildImageAsset('technology', 'img-tech-04', '电路板', 'photo-1518770660439-4636190af475', '绿色电路板微距特写'),
+    buildImageAsset('technology', 'img-tech-05', '智能手机', 'photo-1511707171634-5f897ff02aa9', '手持智能手机'),
+    buildImageAsset('technology', 'img-tech-06', 'VR 头盔', 'photo-1592478411213-6153e4ebc07d', '佩戴 VR 头盔的人'),
+    buildImageAsset('technology', 'img-tech-07', '机械键盘', 'photo-1595225476474-87563907a212', 'RGB 机械键盘'),
+    buildImageAsset('technology', 'img-tech-08', '无人机', 'photo-1473968512647-3e447244af8f', '飞行中的无人机'),
+    buildImageAsset('technology', 'img-tech-09', '3D 打印', 'photo-1581092160607-ee22621dd758', '3D 打印机工作中'),
+    buildImageAsset('technology', 'img-tech-10', '芯片', 'photo-1555617981-dac3880eac6e', '微处理器芯片特写'),
   ],
   business: [
-    buildImageAsset('business', 'img-biz-office', '办公室', 'biz-office', '办公室环境'),
-    buildImageAsset('business', 'img-biz-meeting', '会议', 'biz-meeting', '商务会议'),
-    buildImageAsset('business', 'img-biz-handshake', '握手', 'biz-handshake', '商务握手'),
-    buildImageAsset('business', 'img-biz-chart', '图表', 'biz-chart', '数据图表'),
-    buildImageAsset('business', 'img-biz-teamwork', '团队协作', 'biz-teamwork', '团队协作'),
-    buildImageAsset('business', 'img-biz-startup', '创业', 'biz-startup', '创业公司'),
+    buildImageAsset('business', 'img-biz-01', '办公室', 'photo-1497366216548-37526070297c', '现代开放式办公室'),
+    buildImageAsset('business', 'img-biz-02', '商务会议', 'photo-1552664730-d307ca884978', '团队围坐会议桌讨论'),
+    buildImageAsset('business', 'img-biz-03', '握手', 'photo-1521791136064-7986c2920216', '两人商务握手'),
+    buildImageAsset('business', 'img-biz-04', '数据图表', 'photo-1551288049-bebda4e38f71', '屏幕上的数据分析图表'),
+    buildImageAsset('business', 'img-biz-05', '团队协作', 'photo-1522071820081-009f0129c71c', '团队围坐讨论项目'),
+    buildImageAsset('business', 'img-biz-06', '演讲', 'photo-1475721027785-f74eccf877e2', '商务演讲现场'),
+    buildImageAsset('business', 'img-biz-07', '白板头脑风暴', 'photo-1531538606174-e1ed1e26f680', '白板上的头脑风暴'),
+    buildImageAsset('business', 'img-biz-08', '咖啡办公', 'photo-1497215842964-222b430dc094', '咖啡馆中使用笔记本办公'),
+    buildImageAsset('business', 'img-biz-09', '签合同', 'photo-1450101499163-c8848c66ca85', '签署商务合同'),
+    buildImageAsset('business', 'img-biz-10', '创业公司', 'photo-1559136555-9303baea8ebd', '创业团队工作场景'),
   ],
   nature: [
-    buildImageAsset('nature', 'img-nat-mountain', '山脉', 'nat-mountain', '山脉风景'),
-    buildImageAsset('nature', 'img-nat-ocean', '海洋', 'nat-ocean', '海洋风景'),
-    buildImageAsset('nature', 'img-nat-forest', '森林', 'nat-forest', '森林风景'),
-    buildImageAsset('nature', 'img-nat-sunset', '日落', 'nat-sunset', '日落风景'),
-    buildImageAsset('nature', 'img-nat-flower', '花卉', 'nat-flower', '花卉特写'),
-    buildImageAsset('nature', 'img-nat-waterfall', '瀑布', 'nat-waterfall', '瀑布风景'),
+    buildImageAsset('nature', 'img-nat-01', '雪山', 'photo-1464822759023-fed622ff2c3b', '壮丽的雪山风景'),
+    buildImageAsset('nature', 'img-nat-02', '海洋', 'photo-1505118380757-91f5f5632de0', '蔚蓝的海洋和海浪'),
+    buildImageAsset('nature', 'img-nat-03', '森林', 'photo-1448375240586-882707db888b', '阳光穿过茂密的森林'),
+    buildImageAsset('nature', 'img-nat-04', '日落', 'photo-1495616811223-4d98c6e9c869', '海边金色日落'),
+    buildImageAsset('nature', 'img-nat-05', '花卉', 'photo-1490750967868-88aa4f44baee', '盛开的粉色花朵'),
+    buildImageAsset('nature', 'img-nat-06', '瀑布', 'photo-1432405972618-c6b0cfba8b3e', '壮观的瀑布'),
+    buildImageAsset('nature', 'img-nat-07', '湖泊', 'photo-1439066615861-d1af74d74000', '平静的山间湖泊'),
+    buildImageAsset('nature', 'img-nat-08', '星空', 'photo-1519681393784-d120267933ba', '璀璨的星空银河'),
+    buildImageAsset('nature', 'img-nat-09', '秋叶', 'photo-1507003211169-0a1dd7228f2d', '金黄色的秋天树叶'),
+    buildImageAsset('nature', 'img-nat-10', '沙漠', 'photo-1509316785289-025f5b846b35', '广阔的沙漠沙丘'),
   ],
   food: [
-    buildImageAsset('food', 'img-food-coffee', '咖啡', 'food-coffee', '咖啡'),
-    buildImageAsset('food', 'img-food-sushi', '寿司', 'food-sushi', '寿司'),
-    buildImageAsset('food', 'img-food-pizza', '披萨', 'food-pizza', '披萨'),
-    buildImageAsset('food', 'img-food-salad', '沙拉', 'food-salad', '沙拉'),
-    buildImageAsset('food', 'img-food-cake', '蛋糕', 'food-cake', '蛋糕'),
-    buildImageAsset('food', 'img-food-fruit', '水果', 'food-fruit', '水果拼盘'),
+    buildImageAsset('food', 'img-food-01', '咖啡', 'photo-1495474472287-4d71bcdd2085', '拿铁咖啡拉花'),
+    buildImageAsset('food', 'img-food-02', '寿司', 'photo-1579871494447-9811cf80d66c', '精致的日式寿司拼盘'),
+    buildImageAsset('food', 'img-food-03', '披萨', 'photo-1565299624946-b28f40a0ae38', '新鲜出炉的意式披萨'),
+    buildImageAsset('food', 'img-food-04', '沙拉', 'photo-1512621776951-a57141f2eefd', '新鲜蔬菜沙拉'),
+    buildImageAsset('food', 'img-food-05', '蛋糕', 'photo-1578985545062-69928b1d9587', '精美的巧克力蛋糕'),
+    buildImageAsset('food', 'img-food-06', '水果', 'photo-1619566636858-adf3ef46400b', '新鲜水果拼盘'),
+    buildImageAsset('food', 'img-food-07', '汉堡', 'photo-1568901346375-23c9450c58cd', '多汁的牛肉汉堡'),
+    buildImageAsset('food', 'img-food-08', '面包', 'photo-1509440159596-0249088772ff', '新鲜烘焙的面包'),
+    buildImageAsset('food', 'img-food-09', '冰淇淋', 'photo-1497034825429-c343d7c6a68f', '彩色冰淇淋球'),
+    buildImageAsset('food', 'img-food-10', '中餐', 'photo-1563245372-f21724e3856d', '色香味俱全的中式菜肴'),
   ],
   city: [
-    buildImageAsset('city', 'img-city-skyline', '天际线', 'city-skyline', '城市天际线'),
-    buildImageAsset('city', 'img-city-street', '街道', 'city-street', '城市街道'),
-    buildImageAsset('city', 'img-city-bridge', '桥梁', 'city-bridge', '城市桥梁'),
-    buildImageAsset('city', 'img-city-building', '建筑', 'city-building', '现代建筑'),
-    buildImageAsset('city', 'img-city-night', '夜景', 'city-night', '城市夜景'),
-    buildImageAsset('city', 'img-city-traffic', '交通', 'city-traffic', '城市交通'),
+    buildImageAsset('city', 'img-city-01', '城市天际线', 'photo-1477959858617-67f85cf4f1df', '城市高楼天际线'),
+    buildImageAsset('city', 'img-city-02', '街道', 'photo-1519501025264-65ba15a82390', '繁华的城市街道'),
+    buildImageAsset('city', 'img-city-03', '桥梁', 'photo-1474044159687-1ee9f3a51722', '城市大桥夜景'),
+    buildImageAsset('city', 'img-city-04', '摩天大楼', 'photo-1486325212027-8081e485255e', '仰视摩天大楼'),
+    buildImageAsset('city', 'img-city-05', '城市夜景', 'photo-1514565131-fce0801e5785', '灯火辉煌的城市夜景'),
+    buildImageAsset('city', 'img-city-06', '地铁', 'photo-1474487548417-781cb71495f3', '地铁站台'),
+    buildImageAsset('city', 'img-city-07', '公园', 'photo-1501594907352-04cda38ebc29', '城市中心公园'),
+    buildImageAsset('city', 'img-city-08', '老城区', 'photo-1480714378408-67cf0d13bc1b', '欧式老城区街景'),
+    buildImageAsset('city', 'img-city-09', '霓虹灯', 'photo-1542051841857-5f90071e7989', '东京霓虹灯街道'),
+    buildImageAsset('city', 'img-city-10', '航拍城市', 'photo-1449824913935-59a10b8d2000', '航拍城市全景'),
   ],
   people: [
-    buildImageAsset('people', 'img-ppl-portrait', '肖像', 'ppl-portrait', '人物肖像'),
-    buildImageAsset('people', 'img-ppl-team', '团队', 'ppl-team', '团队合影'),
-    buildImageAsset('people', 'img-ppl-crowd', '人群', 'ppl-crowd', '人群'),
-    buildImageAsset('people', 'img-ppl-smile', '微笑', 'ppl-smile', '微笑的人'),
-    buildImageAsset('people', 'img-ppl-work', '工作', 'ppl-work', '工作中的人'),
-    buildImageAsset('people', 'img-ppl-study', '学习', 'ppl-study', '学习中的人'),
+    buildImageAsset('people', 'img-ppl-01', '肖像', 'photo-1507003211169-0a1dd7228f2d', '自信的男性肖像'),
+    buildImageAsset('people', 'img-ppl-02', '团队合影', 'photo-1529156069898-49953e39b3ac', '开心的团队合影'),
+    buildImageAsset('people', 'img-ppl-03', '阅读', 'photo-1506880018603-83d5b814b5a6', '安静阅读的人'),
+    buildImageAsset('people', 'img-ppl-04', '运动', 'photo-1476480862126-209bfaa8edc8', '户外跑步运动'),
+    buildImageAsset('people', 'img-ppl-05', '工作中', 'photo-1521737711867-e3b97375f902', '专注工作的人'),
+    buildImageAsset('people', 'img-ppl-06', '旅行', 'photo-1501785888041-af3ef285b470', '背包旅行者看风景'),
+    buildImageAsset('people', 'img-ppl-07', '音乐', 'photo-1511671782779-c97d3d27a1d4', '弹吉他的音乐人'),
+    buildImageAsset('people', 'img-ppl-08', '烹饪', 'photo-1556910103-1c02745aae4d', '厨房中烹饪的人'),
+    buildImageAsset('people', 'img-ppl-09', '瑜伽', 'photo-1544367567-0f2fcb009e0b', '户外瑜伽练习'),
+    buildImageAsset('people', 'img-ppl-10', '摄影师', 'photo-1554048612-b6a482bc67e5', '拿着相机的摄影师'),
   ],
   abstract: [
-    buildImageAsset('abstract', 'img-abs-pattern', '图案', 'abs-pattern', '抽象图案'),
-    buildImageAsset('abstract', 'img-abs-gradient', '渐变', 'abs-gradient', '渐变色彩'),
-    buildImageAsset('abstract', 'img-abs-texture', '纹理', 'abs-texture', '抽象纹理'),
-    buildImageAsset('abstract', 'img-abs-geometric', '几何', 'abs-geometric', '几何图形'),
-    buildImageAsset('abstract', 'img-abs-colorful', '多彩', 'abs-colorful', '多彩抽象'),
-    buildImageAsset('abstract', 'img-abs-minimal', '极简', 'abs-minimal', '极简设计'),
+    buildImageAsset('abstract', 'img-abs-01', '流体渐变', 'photo-1557672172-298e090bd0f1', '彩色流体渐变背景'),
+    buildImageAsset('abstract', 'img-abs-02', '几何图形', 'photo-1509228468518-180dd4864904', '彩色几何图形组合'),
+    buildImageAsset('abstract', 'img-abs-03', '光线', 'photo-1507400492013-162706c8c05e', '抽象光线效果'),
+    buildImageAsset('abstract', 'img-abs-04', '水墨', 'photo-1541701494587-cb58502866ab', '水墨扩散效果'),
+    buildImageAsset('abstract', 'img-abs-05', '纹理', 'photo-1558591710-4b4a1ae0f04d', '大理石纹理'),
+    buildImageAsset('abstract', 'img-abs-06', '波浪', 'photo-1550684376-efcbd6e3f031', '抽象波浪线条'),
+    buildImageAsset('abstract', 'img-abs-07', '气泡', 'photo-1558470598-a5dda9640f68', '彩色气泡'),
+    buildImageAsset('abstract', 'img-abs-08', '烟雾', 'photo-1511447333015-45b65e60f6d5', '彩色烟雾效果'),
+    buildImageAsset('abstract', 'img-abs-09', '棱镜', 'photo-1543722530-d2c3201371e7', '棱镜光谱色彩'),
+    buildImageAsset('abstract', 'img-abs-10', '极简线条', 'photo-1494438639946-1ebd1d20bf85', '极简抽象线条'),
   ],
 };
