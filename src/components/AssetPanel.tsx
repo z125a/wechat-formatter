@@ -42,6 +42,8 @@ export function AssetPanel({ open, onClose, onInsert }: AssetPanelProps) {
   const [selectedEmojiCategory, setSelectedEmojiCategory] = useState<EmojiCategory>('faces');
   const [failedImages, setFailedImages] = useState<Set<string>>(new Set());
 
+  const [selectedStickerTag, setSelectedStickerTag] = useState<string>('全部');
+
   if (!open) return null;
 
   const handleTabChange = (tab: TabType) => {
@@ -217,27 +219,45 @@ export function AssetPanel({ open, onClose, onInsert }: AssetPanelProps) {
     );
   };
 
+  const STICKER_TAGS = ['全部', '卡通', '反应', '日常', '祝福', '动物'];
+
   const renderStickerTab = () => {
-    const items = searchQuery.trim()
+    const allItems = searchQuery.trim()
       ? searchAssets('sticker', searchQuery) : getAssetsByCategory('sticker');
+    const items = searchQuery.trim() || selectedStickerTag === '全部'
+      ? allItems
+      : allItems.filter((item) => item.tags.some((t) => t === selectedStickerTag));
     return (
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '6px' }}>
-        {items.map((item) => (
-          <div key={item.id} data-testid={`sticker-item-${item.id}`}
-            onClick={() => onInsert(item.content)}
-            style={{ cursor: 'pointer', borderRadius: 'var(--radius-md)', overflow: 'hidden',
-              border: '1px solid var(--border)', background: 'var(--surface-dim)',
-              transition: 'all 150ms ease', textAlign: 'center' }}
-            title={item.name}>
-            <div dangerouslySetInnerHTML={{ __html: item.preview || '' }}
-              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center',
-                minHeight: '70px', background: 'var(--surface-hover)' }} />
-            <div style={{ padding: '3px 4px', fontSize: '10px', color: 'var(--text-secondary)',
-              fontWeight: 500 }}>
-              {item.name}
-            </div>
+      <div>
+        {!searchQuery.trim() && (
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', marginBottom: '12px' }}>
+            {STICKER_TAGS.map((tag) => (
+              <button key={tag}
+                onClick={() => setSelectedStickerTag(tag)}
+                style={pillStyle(selectedStickerTag === tag)}>
+                {tag}
+              </button>
+            ))}
           </div>
-        ))}
+        )}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '6px' }}>
+          {items.map((item) => (
+            <div key={item.id} data-testid={`sticker-item-${item.id}`}
+              onClick={() => onInsert(item.content)}
+              style={{ cursor: 'pointer', borderRadius: 'var(--radius-md)', overflow: 'hidden',
+                border: '1px solid var(--border)', background: 'var(--surface-dim)',
+                transition: 'all 150ms ease', textAlign: 'center' }}
+              title={item.name}>
+              <div dangerouslySetInnerHTML={{ __html: item.preview || '' }}
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  minHeight: '70px', background: 'var(--surface-hover)' }} />
+              <div style={{ padding: '3px 4px', fontSize: '10px', color: 'var(--text-secondary)',
+                fontWeight: 500 }}>
+                {item.name}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     );
   };
