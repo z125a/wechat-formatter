@@ -8,7 +8,7 @@ export function ThemeSelector() {
   const setThemeId = useAppStore((s) => s.setThemeId);
 
   return (
-    <div role="radiogroup" aria-label="主题选择" style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+    <div role="radiogroup" aria-label="主题选择" style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
       {themes.map((theme) => {
         const isSelected = theme.id === currentThemeId;
         return (
@@ -17,16 +17,7 @@ export function ThemeSelector() {
             role="radio"
             aria-checked={isSelected}
             onClick={() => setThemeId(theme.id)}
-            className="btn-animated"
-            style={{
-              padding: '6px 16px',
-              borderRadius: '4px',
-              border: isSelected ? '2px solid #1565c0' : '1px solid #ccc',
-              background: isSelected ? '#e3f2fd' : '#fff',
-              fontWeight: isSelected ? 600 : 400,
-              cursor: 'pointer',
-              fontSize: '14px',
-            }}
+            className={`theme-pill ${isSelected ? 'selected' : ''}`}
           >
             {theme.name}
           </button>

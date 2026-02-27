@@ -17,9 +17,7 @@ export function Editor() {
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
-    if (value.length > MAX_CHAR_LIMIT) {
-      return;
-    }
+    if (value.length > MAX_CHAR_LIMIT) return;
     setMarkdown(value);
   };
 
@@ -32,26 +30,19 @@ export function Editor() {
     setIsDragging(true);
   };
 
-  const handleDragLeave = () => {
-    setIsDragging(false);
-  };
+  const handleDragLeave = () => setIsDragging(false);
 
   const handleDrop = async (e: React.DragEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
     setIsDragging(false);
-
     const file = e.dataTransfer.files[0];
     if (!file || !file.type.startsWith('image/')) return;
-
     try {
       const dataUrl = await fileToDataUrl(file);
-      const imgMarkdown = buildImageMarkdown(dataUrl);
-      const newContent = insertAtCursor(markdown, cursorPosition, imgMarkdown);
+      const newContent = insertAtCursor(markdown, cursorPosition, buildImageMarkdown(dataUrl));
       setMarkdown(newContent);
       format();
-    } catch {
-      // silently ignore read errors
-    }
+    } catch { /* silently ignore */ }
   };
 
   return (
@@ -64,35 +55,14 @@ export function Editor() {
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        className="focus-highlight"
+        className={`editor-textarea ${isDragging ? 'dragging' : ''}`}
         placeholder="在此输入 Markdown 内容..."
         aria-label="Markdown 编辑器"
-        style={{
-          flex: 1,
-          resize: 'none',
-          fontFamily: 'monospace',
-          fontSize: '14px',
-          lineHeight: 1.6,
-          padding: '12px',
-          border: isDragging ? '2px dashed #1976d2' : '1px solid #ddd',
-          borderRadius: '4px',
-          outline: 'none',
-          boxSizing: 'border-box',
-        }}
       />
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: '4px 8px',
-          fontSize: '12px',
-          color: isOverLimit ? '#d32f2f' : '#888',
-        }}
-      >
+      <div className={`editor-status ${isOverLimit ? 'over-limit' : ''}`}>
         {isOverLimit && <span role="alert">字符数超出限制，请删减内容</span>}
         <span style={{ marginLeft: 'auto' }}>
-          {charCount} / {MAX_CHAR_LIMIT}
+          {charCount.toLocaleString()} / {MAX_CHAR_LIMIT.toLocaleString()}
         </span>
       </div>
     </div>

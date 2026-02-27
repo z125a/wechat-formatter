@@ -7,28 +7,13 @@ export function Preview() {
   const isEmpty = !formattedHtml && !markdown.trim();
 
   return (
-    <div
-      className="theme-transition focus-highlight"
-      style={{
-        height: '100%',
-        overflowY: 'auto',
-        padding: '16px',
-        border: '1px solid #ddd',
-        borderRadius: '4px',
-        boxSizing: 'border-box',
-      }}
-    >
+    <div className="preview-container">
       {isEmpty ? (
-        <p
-          style={{
-            color: '#999',
-            textAlign: 'center',
-            marginTop: '40px',
-            fontSize: '14px',
-          }}
-        >
-          预览区域 - 请在左侧输入 Markdown 内容
-        </p>
+        <div className="preview-empty">
+          <div className="preview-empty-icon">📝</div>
+          <p>预览区域</p>
+          <p style={{ fontSize: '12px', marginTop: '4px' }}>在左侧输入 Markdown 内容即可实时预览</p>
+        </div>
       ) : (
         <div dangerouslySetInnerHTML={{ __html: formattedHtml }} />
       )}

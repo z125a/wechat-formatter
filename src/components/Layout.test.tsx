@@ -34,9 +34,9 @@ describe('Layout', () => {
     // StylePanel
     expect(screen.getByLabelText('样式微调')).toBeDefined();
 
-    // Toolbar buttons
-    expect(screen.getByText('一键排版')).toBeDefined();
-    expect(screen.getByText('复制')).toBeDefined();
+    // Toolbar buttons (with emoji prefixes)
+    expect(screen.getByText(/一键排版/)).toBeDefined();
+    expect(screen.getByText(/复制/)).toBeDefined();
   });
 
   it('has a main area with layout-main class for responsive behavior', () => {
@@ -61,15 +61,12 @@ describe('Layout', () => {
       fireEvent.change(textarea, { target: { value: '# Hello' } });
     });
 
-    // Before 500ms, formattedHtml should still be empty
     expect(useAppStore.getState().formattedHtml).toBe('');
 
-    // Advance timers by 500ms
     act(() => {
       vi.advanceTimersByTime(500);
     });
 
-    // After 500ms, format() should have been called and formattedHtml updated
     expect(useAppStore.getState().formattedHtml).not.toBe('');
   });
 
@@ -96,12 +93,10 @@ describe('Layout', () => {
       fireEvent.change(textarea, { target: { value: 'abc' } });
     });
 
-    // Only 500ms after the LAST change should format be called
     act(() => {
       vi.advanceTimersByTime(500);
     });
 
-    // format should have been called only once (for the last change)
     expect(formatSpy).toHaveBeenCalledTimes(1);
   });
 
@@ -109,13 +104,11 @@ describe('Layout', () => {
     useAppStore.setState({ markdown: '# Test' });
     render(<Layout />);
 
-    // Let initial format run
     act(() => {
       vi.advanceTimersByTime(500);
     });
     const htmlAfterClassic = useAppStore.getState().formattedHtml;
 
-    // Switch theme
     act(() => {
       useAppStore.getState().setThemeId('tech-blue');
     });
@@ -125,7 +118,6 @@ describe('Layout', () => {
     });
 
     const htmlAfterTechBlue = useAppStore.getState().formattedHtml;
-    // Both should have content, but styles differ
     expect(htmlAfterClassic).not.toBe('');
     expect(htmlAfterTechBlue).not.toBe('');
     expect(htmlAfterClassic).not.toBe(htmlAfterTechBlue);

@@ -21,18 +21,9 @@ export function Layout() {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    if (timerRef.current) {
-      clearTimeout(timerRef.current);
-    }
-    timerRef.current = setTimeout(() => {
-      formatFn();
-    }, 500);
-
-    return () => {
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
-      }
-    };
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => formatFn(), 500);
+    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
   }, [markdown, currentThemeId, customStyles, formatFn]);
 
   const handleAssetInsert = (content: string) => {
@@ -43,24 +34,22 @@ export function Layout() {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden' }}>
-      {/* Top bar */}
-      <header
-        style={{
-          padding: '12px 16px',
-          borderBottom: '1px solid #e0e0e0',
-          backgroundColor: '#fafafa',
-          display: 'flex',
-          flexWrap: 'wrap',
-          alignItems: 'flex-start',
-          gap: '12px',
-        }}
-      >
-        <ThemeSelector />
-        <StylePanel />
-        <Toolbar />
+      <header className="app-header">
+        <div className="header-top">
+          <div className="header-brand">
+            <span className="header-logo">✨</span>
+            <span className="header-title">微信排版助手</span>
+          </div>
+          <div className="header-toolbar">
+            <Toolbar />
+          </div>
+        </div>
+        <div className="header-bottom">
+          <ThemeSelector />
+          <StylePanel />
+        </div>
       </header>
 
-      {/* Main area: Editor + Preview */}
       <main className="layout-main">
         <div className="layout-editor">
           <Editor />

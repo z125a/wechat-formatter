@@ -9,16 +9,17 @@ describe('Editor', () => {
     useAppStore.setState({ markdown: '' });
   });
 
-  it('renders a textarea with monospace font', () => {
+  it('renders a textarea with editor-textarea class', () => {
     render(<Editor />);
     const textarea = screen.getByRole('textbox', { name: /markdown/i });
     expect(textarea).toBeInTheDocument();
-    expect(textarea).toHaveStyle({ fontFamily: 'monospace' });
+    expect(textarea.classList.contains('editor-textarea')).toBe(true);
   });
 
-  it('displays character count as "0 / 50000" when empty', () => {
+  it('displays character count when empty', () => {
     render(<Editor />);
-    expect(screen.getByText(`0 / ${MAX_CHAR_LIMIT}`)).toBeInTheDocument();
+    // toLocaleString() formats numbers with commas
+    expect(screen.getByText(`0 / ${MAX_CHAR_LIMIT.toLocaleString()}`)).toBeInTheDocument();
   });
 
   it('updates store and character count on input', () => {
@@ -26,7 +27,7 @@ describe('Editor', () => {
     const textarea = screen.getByRole('textbox', { name: /markdown/i });
     fireEvent.change(textarea, { target: { value: 'hello' } });
     expect(useAppStore.getState().markdown).toBe('hello');
-    expect(screen.getByText(`5 / ${MAX_CHAR_LIMIT}`)).toBeInTheDocument();
+    expect(screen.getByText(`5 / ${MAX_CHAR_LIMIT.toLocaleString()}`)).toBeInTheDocument();
   });
 
   it('prevents input beyond MAX_CHAR_LIMIT', () => {
@@ -35,14 +36,11 @@ describe('Editor', () => {
     render(<Editor />);
     const textarea = screen.getByRole('textbox', { name: /markdown/i });
 
-    // Attempt to type one more character
     fireEvent.change(textarea, { target: { value: longText + 'x' } });
-    // Should still be at the limit, not beyond
     expect(useAppStore.getState().markdown).toBe(longText);
   });
 
   it('shows over-limit warning when charCount exceeds limit', () => {
-    // Directly set state beyond limit to simulate edge case
     const overText = 'a'.repeat(MAX_CHAR_LIMIT + 1);
     useAppStore.setState({ markdown: overText });
     render(<Editor />);

@@ -23,21 +23,16 @@ export function Toolbar() {
     if (!toast) return;
     const timer = setTimeout(() => {
       setToastExiting(true);
-      setTimeout(() => {
-        setToast(null);
-        setToastExiting(false);
-      }, 300);
+      setTimeout(() => { setToast(null); setToastExiting(false); }, 300);
     }, 3000);
     return () => clearTimeout(timer);
   }, [toast]);
 
   const handleCopy = async () => {
     const result = await copyToClipboard();
-    if (result.success) {
-      setToast({ message: '复制成功', type: 'success' });
-    } else {
-      setToast({ message: result.error ?? '复制失败', type: 'error' });
-    }
+    setToast(result.success
+      ? { message: '✓ 已复制到剪贴板', type: 'success' }
+      : { message: result.error ?? '复制失败', type: 'error' });
   };
 
   const handleImageConfirm = (url: string) => {
@@ -60,99 +55,30 @@ export function Toolbar() {
   };
 
   return (
-    <div className="toolbar-enhanced" style={{ display: 'flex', alignItems: 'center', gap: '8px', position: 'relative' }}>
-      <button
-        className="btn-animated"
-        onClick={format}
-        style={{
-          padding: '8px 16px',
-          backgroundColor: '#1976d2',
-          color: '#fff',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer',
-          fontSize: '14px',
-        }}
-      >
-        一键排版
+    <>
+      <button className="toolbar-btn toolbar-btn-primary" onClick={format}>
+        ⚡ 一键排版
+      </button>
+      <button className="toolbar-btn toolbar-btn-ghost" onClick={handleCopy}>
+        📋 复制
+      </button>
+      <button className="toolbar-btn toolbar-btn-ghost" onClick={() => setImageDialogOpen(true)}>
+        🖼️ 图片
+      </button>
+      <button className="toolbar-btn toolbar-btn-ghost" onClick={() => setTemplateDialogOpen(true)}>
+        📄 模板
       </button>
       <button
-        className="btn-animated"
-        onClick={handleCopy}
-        style={{
-          padding: '8px 16px',
-          backgroundColor: '#43a047',
-          color: '#fff',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer',
-          fontSize: '14px',
-        }}
-      >
-        复制
-      </button>
-      <button
-        className="btn-animated"
-        onClick={() => setImageDialogOpen(true)}
-        style={{
-          padding: '8px 16px',
-          backgroundColor: '#7b1fa2',
-          color: '#fff',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer',
-          fontSize: '14px',
-        }}
-      >
-        插入图片
-      </button>
-      <button
-        className="btn-animated"
-        onClick={() => setTemplateDialogOpen(true)}
-        style={{
-          padding: '8px 16px',
-          backgroundColor: '#f57c00',
-          color: '#fff',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer',
-          fontSize: '14px',
-        }}
-      >
-        选择模板
-      </button>
-      <button
-        className="btn-animated"
+        className={`toolbar-btn toolbar-btn-ghost ${assetPanelOpen ? 'active' : ''}`}
         onClick={() => setAssetPanelOpen(!assetPanelOpen)}
-        style={{
-          padding: '8px 16px',
-          backgroundColor: assetPanelOpen ? '#00897b' : '#00acc1',
-          color: '#fff',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer',
-          fontSize: '14px',
-        }}
       >
-        素材库
+        🎨 素材库
       </button>
 
       {toast && (
         <div
           role="status"
-          className={toastExiting ? 'toast-exit' : 'toast-enter'}
-          style={{
-            position: 'fixed',
-            top: '16px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            padding: '8px 20px',
-            borderRadius: '4px',
-            color: '#fff',
-            fontSize: '14px',
-            zIndex: 1000,
-            backgroundColor: toast.type === 'success' ? '#43a047' : '#d32f2f',
-          }}
+          className={`toast-notification ${toast.type === 'success' ? 'toast-success' : 'toast-error'} ${toastExiting ? 'toast-exit' : 'toast-enter'}`}
         >
           {toast.message}
         </div>
@@ -168,6 +94,6 @@ export function Toolbar() {
         onSelect={handleTemplateSelect}
         onCancel={() => setTemplateDialogOpen(false)}
       />
-    </div>
+    </>
   );
 }
