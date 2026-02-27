@@ -1,0 +1,121 @@
+/* ============================================
+   animations.css — UI Animation & Visual Polish
+   Requirements: 4.1–4.3, 5.1–5.3, 6.1–6.2,
+                 7.1–7.2, 8.1–8.3
+   ============================================ */
+
+/* ----- Button interactions (Req 4.1, 4.2, 4.3) ----- */
+
+.btn-animated {
+  transition: background-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+}
+
+.btn-animated:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-animated:active {
+  transform: scale(0.96);
+}
+
+/* ----- Panel collapse / expand (Req 5.1, 5.2, 5.3) ----- */
+
+.panel-collapsible {
+  transition: max-height 300ms ease, opacity 300ms ease;
+  overflow: hidden;
+}
+
+.panel-collapsible.collapsed {
+  max-height: 0;
+  opacity: 0;
+}
+
+.panel-collapsible.expanded {
+  max-height: 500px;
+  opacity: 1;
+}
+
+/* ----- Toast slide-in / slide-out (Req 6.1, 6.2) ----- */
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes toast-out {
+  from {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+  }
+}
+
+.toast-enter {
+  animation: toast-in 300ms ease forwards;
+}
+
+.toast-exit {
+  animation: toast-out 300ms ease forwards;
+}
+
+/* ----- Theme transition (Req 7.1, 7.2) ----- */
+
+.theme-transition {
+  transition: color 300ms ease, background-color 300ms ease;
+}
+
+/* ----- Drag-and-drop highlight (Req 2.1) ----- */
+
+.drop-highlight {
+  border: 2px dashed #1976d2 !important;
+  background-color: rgba(25, 118, 210, 0.05);
+}
+
+/* ----- Focus highlight (Req 8.2) ----- */
+
+.focus-highlight:focus {
+  border-color: #1976d2 !important;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+/* ----- Toolbar visual polish (Req 8.1) ----- */
+
+.toolbar-enhanced {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  padding: 8px 12px;
+  background: #fff;
+}
+
+/* ----- Accessibility: reduced motion (Req 8.3) ----- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ----- Asset panel slide-in (Task 5.1) ----- */
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
