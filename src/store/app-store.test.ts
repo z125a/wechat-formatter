@@ -43,6 +43,8 @@ describe('useAppStore', () => {
     vi.clearAllMocks();
     mockLoad.mockReturnValue(null);
     mockIsAvailable.mockReturnValue(true);
+    // Clear localStorage to avoid article data leaking between tests
+    try { localStorage.clear(); } catch { /* */ }
   });
 
   // --- Initial state ---

@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { useAppStore } from '../store/app-store';
 import { MAX_CHAR_LIMIT } from '../core/formatter';
 import { fileToDataUrl, insertAtCursor, buildImageMarkdown } from '../core/image-inserter';
@@ -10,6 +10,8 @@ export function Editor() {
   const cursorPosition = useAppStore((s) => s.cursorPosition);
   const setCursorPosition = useAppStore((s) => s.setCursorPosition);
   const format = useAppStore((s) => s.format);
+  const undo = useAppStore((s) => s.undo);
+  const redo = useAppStore((s) => s.redo);
 
   const [isDragging, setIsDragging] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -17,6 +19,14 @@ export function Editor() {
   const charCount = markdown.length;
   const isOverLimit = charCount > MAX_CHAR_LIMIT;
   const lineCount = markdown ? markdown.split('\n').length : 0;
+
+  // Sync scroll: dispatch custom event when editor scrolls
+  const handleScroll = useCallback(() => {
+    const ta = textareaRef.current;
+    if (!ta) return;
+    const ratio = ta.scrollTop / (ta.scrollHeight - ta.clientHeight || 1);
+    window.dispatchEvent(new CustomEvent('editor-scroll', { detail: { ratio } }));
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -32,9 +42,21 @@ export function Editor() {
     const isMod = e.ctrlKey || e.metaKey;
     if (!isMod) return;
 
+    // Undo: Ctrl+Z
+    if (e.key === 'z' && !e.shiftKey) {
+      e.preventDefault();
+      undo();
+      return;
+    }
+    // Redo: Ctrl+Shift+Z or Ctrl+Y
+    if ((e.key === 'z' && e.shiftKey) || e.key === 'y') {
+      e.preventDefault();
+      redo();
+      return;
+    }
+
     const ta = textareaRef.current;
     if (!ta) return;
-
     const start = ta.selectionStart;
     const end = ta.selectionEnd;
     const selected = markdown.slice(start, end);
@@ -55,7 +77,7 @@ export function Editor() {
     e.preventDefault();
     const newText = markdown.slice(0, start) + prefix + selected + suffix + markdown.slice(end);
     setMarkdown(newText);
-  }, [markdown, setMarkdown]);
+  }, [markdown, setMarkdown, undo, redo]);
 
   const handleDragOver = (e: React.DragEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
@@ -87,11 +109,12 @@ export function Editor() {
         onSelect={handleCursorChange}
         onClick={handleCursorChange}
         onKeyDown={handleKeyDown}
+        onScroll={handleScroll}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         className={`editor-textarea ${isDragging ? 'dragging' : ''}`}
-        placeholder="在此输入 Markdown 内容...&#10;&#10;支持快捷键：Ctrl+B 加粗 / Ctrl+I 斜体 / Ctrl+K 链接"
+        placeholder="在此输入 Markdown 内容...&#10;&#10;支持快捷键：Ctrl+B 加粗 / Ctrl+I 斜体 / Ctrl+K 链接 / Ctrl+Z 撤销 / Ctrl+Shift+Z 重做"
         aria-label="Markdown 编辑器"
       />
       <div className={`editor-status ${isOverLimit ? 'over-limit' : ''}`}>

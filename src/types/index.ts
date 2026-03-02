@@ -102,9 +102,34 @@ export interface AppState {
   assetPanelOpen: boolean;
   setAssetPanelOpen: (open: boolean) => void;
 
+  // 全屏模式
+  fullscreen: boolean;
+  setFullscreen: (fs: boolean) => void;
+
+  // 撤销/重做
+  undo: () => void;
+  redo: () => void;
+  canUndo: boolean;
+  canRedo: boolean;
+
+  // 多文章管理
+  articles: ArticleMeta[];
+  activeArticleId: string;
+  createArticle: (name?: string) => void;
+  switchArticle: (id: string) => void;
+  deleteArticle: (id: string) => void;
+  renameArticle: (id: string, name: string) => void;
+
   // 操作
   format: () => void;
   copyToClipboard: () => Promise<CopyResult>;
+}
+
+/** 文章元数据 */
+export interface ArticleMeta {
+  id: string;
+  name: string;
+  updatedAt: number;
 }
 
 // --- 素材库类型 ---

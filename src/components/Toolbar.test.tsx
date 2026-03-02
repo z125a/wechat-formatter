@@ -21,6 +21,22 @@ vi.mock('../store/app-store', async () => {
     setCustomStyles: vi.fn(),
     format: mockFormat,
     copyToClipboard: mockCopyToClipboard,
+    cursorPosition: 0,
+    setCursorPosition: vi.fn(),
+    assetPanelOpen: false,
+    setAssetPanelOpen: vi.fn(),
+    fullscreen: false,
+    setFullscreen: vi.fn(),
+    canUndo: false,
+    canRedo: false,
+    undo: vi.fn(),
+    redo: vi.fn(),
+    articles: [{ id: 'test-1', name: '测试文章', updatedAt: Date.now() }],
+    activeArticleId: 'test-1',
+    createArticle: vi.fn(),
+    switchArticle: vi.fn(),
+    deleteArticle: vi.fn(),
+    renameArticle: vi.fn(),
   }));
 
   return { useAppStore };

@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useAppStore } from '../store/app-store';
 import { ImageDialog } from './ImageDialog';
 import { TemplateDialog } from './TemplateDialog';
+import { ArticleManager } from './ArticleManager';
+import { ExportDialog } from './ExportDialog';
 import { buildImageMarkdown, insertAtCursor } from '../core/image-inserter';
 import { getTemplate } from '../core/template-manager';
 
@@ -13,6 +15,11 @@ export function Toolbar() {
   const cursorPosition = useAppStore((s) => s.cursorPosition);
   const assetPanelOpen = useAppStore((s) => s.assetPanelOpen);
   const setAssetPanelOpen = useAppStore((s) => s.setAssetPanelOpen);
+  const undo = useAppStore((s) => s.undo);
+  const redo = useAppStore((s) => s.redo);
+  const canUndo = useAppStore((s) => s.canUndo);
+  const canRedo = useAppStore((s) => s.canRedo);
+  const setFullscreen = useAppStore((s) => s.setFullscreen);
 
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
   const [toastExiting, setToastExiting] = useState(false);
@@ -56,6 +63,13 @@ export function Toolbar() {
 
   return (
     <>
+      <button className="toolbar-btn toolbar-btn-ghost" onClick={undo} disabled={!canUndo} title="撤销 (Ctrl+Z)" style={{ opacity: canUndo ? 1 : 0.4 }}>
+        ↩️
+      </button>
+      <button className="toolbar-btn toolbar-btn-ghost" onClick={redo} disabled={!canRedo} title="重做 (Ctrl+Shift+Z)" style={{ opacity: canRedo ? 1 : 0.4 }}>
+        ↪️
+      </button>
+      <span style={{ width: '1px', height: '20px', background: 'rgba(255,255,255,0.15)', margin: '0 4px' }} />
       <button className="toolbar-btn toolbar-btn-primary" onClick={format}>
         ⚡ 一键排版
       </button>
@@ -73,6 +87,11 @@ export function Toolbar() {
         onClick={() => setAssetPanelOpen(!assetPanelOpen)}
       >
         🎨 素材库
+      </button>
+      <ArticleManager />
+      <ExportDialog />
+      <button className="toolbar-btn toolbar-btn-ghost" onClick={() => setFullscreen(true)} title="全屏模式 (F11)">
+        🖥️ 全屏
       </button>
 
       {toast && (
