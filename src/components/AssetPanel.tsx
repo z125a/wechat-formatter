@@ -15,7 +15,7 @@ export interface AssetPanelProps {
   onInsert: (content: string) => void;
 }
 
-type TabType = 'image' | 'divider' | 'emoji' | 'text-block' | 'gif' | 'sticker';
+type TabType = 'image' | 'divider' | 'emoji' | 'text-block' | 'gif' | 'sticker' | 'color';
 
 const TABS: { key: TabType; label: string }[] = [
   { key: 'image', label: '🖼️ 图片' },
@@ -24,6 +24,7 @@ const TABS: { key: TabType; label: string }[] = [
   { key: 'divider', label: '✂️ 分割线' },
   { key: 'emoji', label: '😀 Emoji' },
   { key: 'text-block', label: '📝 文字块' },
+  { key: 'color', label: '🎨 配色' },
 ];
 
 const EMOJI_CATEGORY_NAMES: Record<EmojiCategory, string> = {
@@ -262,6 +263,54 @@ export function AssetPanel({ open, onClose, onInsert }: AssetPanelProps) {
     );
   };
 
+  const COLOR_SCHEMES = [
+    { name: '科技蓝', colors: ['#0f172a', '#1e40af', '#3b82f6', '#93c5fd', '#dbeafe'] },
+    { name: '自然绿', colors: ['#14532d', '#166534', '#22c55e', '#86efac', '#dcfce7'] },
+    { name: '暖阳橙', colors: ['#7c2d12', '#c2410c', '#f97316', '#fdba74', '#fff7ed'] },
+    { name: '优雅紫', colors: ['#3b0764', '#6b21a8', '#a855f7', '#d8b4fe', '#f5f3ff'] },
+    { name: '玫瑰红', colors: ['#881337', '#be123c', '#f43f5e', '#fda4af', '#fff1f2'] },
+    { name: '海洋青', colors: ['#134e4a', '#0d9488', '#2dd4bf', '#99f6e4', '#f0fdfa'] },
+    { name: '金色年华', colors: ['#78350f', '#b45309', '#f59e0b', '#fcd34d', '#fefce8'] },
+    { name: '深邃靛', colors: ['#1e1b4b', '#3730a3', '#6366f1', '#a5b4fc', '#eef2ff'] },
+    { name: '森林棕', colors: ['#422006', '#713f12', '#a16207', '#d4a574', '#fdf6ec'] },
+    { name: '樱花粉', colors: ['#831843', '#be185d', '#ec4899', '#f9a8d4', '#fdf2f8'] },
+    { name: '极光绿', colors: ['#052e16', '#15803d', '#4ade80', '#bbf7d0', '#f0fdf4'] },
+    { name: '星空灰', colors: ['#111827', '#374151', '#6b7280', '#d1d5db', '#f9fafb'] },
+  ];
+
+  const renderColorTab = () => {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        {COLOR_SCHEMES.map((scheme) => (
+          <div key={scheme.name} style={{ ...cardStyle, padding: '12px' }}>
+            <div style={{ fontSize: '12px', fontWeight: 600, color: 'var(--text)', marginBottom: '8px' }}>{scheme.name}</div>
+            <div style={{ display: 'flex', gap: '4px', marginBottom: '8px' }}>
+              {scheme.colors.map((c, i) => (
+                <div key={i} style={{ flex: 1, height: '32px', background: c, borderRadius: '4px', cursor: 'pointer', border: '1px solid rgba(0,0,0,0.08)' }}
+                  title={`点击复制 ${c}`}
+                  onClick={() => { navigator.clipboard.writeText(c).catch(() => {}); }} />
+              ))}
+            </div>
+            <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
+              {scheme.colors.map((c, i) => (
+                <span key={i} style={{ fontSize: '10px', color: 'var(--text-muted)', fontFamily: 'monospace', cursor: 'pointer' }}
+                  onClick={() => { navigator.clipboard.writeText(c).catch(() => {}); }}>
+                  {c}
+                </span>
+              ))}
+            </div>
+            <button onClick={() => {
+              const html = `<div style="display: flex; gap: 4px; margin: 12px 0;">${scheme.colors.map((c) => `<div style="flex: 1; height: 40px; background: ${c}; border-radius: 6px;"></div>`).join('')}</div>`;
+              onInsert(html);
+            }} style={{ marginTop: '6px', width: '100%', padding: '5px', fontSize: '11px', border: '1px solid var(--border)', borderRadius: '4px', background: 'var(--surface-dim)', color: 'var(--text-secondary)', cursor: 'pointer' }}>
+              插入色卡
+            </button>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   const renderTabContent = () => {
     switch (activeTab) {
       case 'image': return renderImageTab();
@@ -270,6 +319,7 @@ export function AssetPanel({ open, onClose, onInsert }: AssetPanelProps) {
       case 'text-block': return renderTextBlockTab();
       case 'gif': return renderGifTab();
       case 'sticker': return renderStickerTab();
+      case 'color': return renderColorTab();
       default: return null;
     }
   };

@@ -8,6 +8,7 @@ import { CustomThemeEditor } from './CustomThemeEditor';
 import { SaveTemplateDialog } from './SaveTemplateDialog';
 import { WordStats } from './WordStats';
 import { DragReorder } from './DragReorder';
+import { FindReplace } from './FindReplace';
 import { buildImageMarkdown, insertAtCursor } from '../core/image-inserter';
 import { getTemplate } from '../core/template-manager';
 
@@ -98,6 +99,7 @@ export function Toolbar() {
       <CustomThemeEditor />
       <WordStats />
       <DragReorder />
+      <FindReplace />
       <button className="toolbar-btn toolbar-btn-ghost" onClick={() => setFullscreen(true)} title="全屏模式 (F11)">
         🖥️ 全屏
       </button>
