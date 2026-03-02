@@ -37,6 +37,14 @@ vi.mock('../store/app-store', async () => {
     switchArticle: vi.fn(),
     deleteArticle: vi.fn(),
     renameArticle: vi.fn(),
+    customThemes: [],
+    saveCustomTheme: vi.fn(),
+    deleteCustomTheme: vi.fn(),
+    userTemplates: [],
+    saveAsTemplate: vi.fn(),
+    deleteUserTemplate: vi.fn(),
+    wordStatsOpen: false,
+    setWordStatsOpen: vi.fn(),
   }));
 
   return { useAppStore };

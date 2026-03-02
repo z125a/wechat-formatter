@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { AppState, ArticleMeta, CopyResult, ThemeStyles } from '../types';
+import type { AppState, ArticleMeta, CopyResult, ThemeStyles, ThemeConfig, UserTemplate } from '../types';
 import { format } from '../core/formatter';
 import { getTheme, mergeCustomStyles } from '../core/theme-manager';
 import { storageService } from '../services/storage-service';
@@ -57,6 +57,38 @@ function saveArticleContent(id: string, content: string) {
 
 function deleteArticleContent(id: string) {
   try { localStorage.removeItem(`wf_art_${id}`); } catch { /* */ }
+}
+
+// ============================================================
+// Custom themes helpers
+// ============================================================
+const CUSTOM_THEMES_KEY = 'wf_custom_themes';
+
+function loadCustomThemes(): ThemeConfig[] {
+  try {
+    const raw = localStorage.getItem(CUSTOM_THEMES_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch { return []; }
+}
+
+function saveCustomThemesToStorage(themes: ThemeConfig[]) {
+  try { localStorage.setItem(CUSTOM_THEMES_KEY, JSON.stringify(themes)); } catch { /* */ }
+}
+
+// ============================================================
+// User templates helpers
+// ============================================================
+const USER_TEMPLATES_KEY = 'wf_user_templates';
+
+function loadUserTemplates(): UserTemplate[] {
+  try {
+    const raw = localStorage.getItem(USER_TEMPLATES_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch { return []; }
+}
+
+function saveUserTemplatesToStorage(templates: UserTemplate[]) {
+  try { localStorage.setItem(USER_TEMPLATES_KEY, JSON.stringify(templates)); } catch { /* */ }
 }
 
 // ============================================================
@@ -261,6 +293,45 @@ export const useAppStore = create<AppState>((set, get) => ({
     saveArticles(articles);
     set({ articles });
   },
+
+  // 自定义主题
+  customThemes: loadCustomThemes(),
+
+  saveCustomTheme: (theme: ThemeConfig) => {
+    const themes = [...get().customThemes.filter((t) => t.id !== theme.id), theme];
+    saveCustomThemesToStorage(themes);
+    set({ customThemes: themes });
+  },
+
+  deleteCustomTheme: (id: string) => {
+    const themes = get().customThemes.filter((t) => t.id !== id);
+    saveCustomThemesToStorage(themes);
+    set({ customThemes: themes });
+    if (get().currentThemeId === id) {
+      set({ currentThemeId: 'classic', customStyles: {} });
+    }
+  },
+
+  // 用户自定义模板
+  userTemplates: loadUserTemplates(),
+
+  saveAsTemplate: (name: string) => {
+    const id = 'user_' + generateId();
+    const tpl: UserTemplate = { id, name, content: get().markdown, createdAt: Date.now() };
+    const templates = [...get().userTemplates, tpl];
+    saveUserTemplatesToStorage(templates);
+    set({ userTemplates: templates });
+  },
+
+  deleteUserTemplate: (id: string) => {
+    const templates = get().userTemplates.filter((t) => t.id !== id);
+    saveUserTemplatesToStorage(templates);
+    set({ userTemplates: templates });
+  },
+
+  // 字数统计面板
+  wordStatsOpen: false,
+  setWordStatsOpen: (open: boolean) => set({ wordStatsOpen: open }),
 
   // 存储状态
   storageAvailable: initial.storageAvailable,

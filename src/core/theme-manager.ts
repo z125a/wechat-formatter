@@ -178,9 +178,19 @@ export function getPresetThemes(): ThemeConfig[] {
   return PRESET_THEMES;
 }
 
-/** 获取指定 ID 的主题 */
+/** 获取指定 ID 的主题（含自定义主题） */
 export function getTheme(id: string): ThemeConfig | undefined {
-  return PRESET_THEMES.find((theme) => theme.id === id);
+  const preset = PRESET_THEMES.find((theme) => theme.id === id);
+  if (preset) return preset;
+  // Check custom themes from localStorage
+  try {
+    const raw = localStorage.getItem('wf_custom_themes');
+    if (raw) {
+      const customs: ThemeConfig[] = JSON.parse(raw);
+      return customs.find((t) => t.id === id);
+    }
+  } catch { /* */ }
+  return undefined;
 }
 
 /** 合并用户自定义样式到主题，返回新的 ThemeConfig */

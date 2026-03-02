@@ -120,9 +120,31 @@ export interface AppState {
   deleteArticle: (id: string) => void;
   renameArticle: (id: string, name: string) => void;
 
+  // 自定义主题
+  customThemes: ThemeConfig[];
+  saveCustomTheme: (theme: ThemeConfig) => void;
+  deleteCustomTheme: (id: string) => void;
+
+  // 用户自定义模板
+  userTemplates: UserTemplate[];
+  saveAsTemplate: (name: string) => void;
+  deleteUserTemplate: (id: string) => void;
+
+  // 字数统计面板
+  wordStatsOpen: boolean;
+  setWordStatsOpen: (open: boolean) => void;
+
   // 操作
   format: () => void;
   copyToClipboard: () => Promise<CopyResult>;
+}
+
+/** 用户自定义模板 */
+export interface UserTemplate {
+  id: string;
+  name: string;
+  content: string;
+  createdAt: number;
 }
 
 /** 文章元数据 */

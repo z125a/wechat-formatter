@@ -6,6 +6,7 @@ import { StylePanel } from './StylePanel';
 import { Toolbar } from './Toolbar';
 import { AssetPanel } from './AssetPanel';
 import { Outline } from './Outline';
+import { ShortcutsHelp } from './ShortcutsHelp';
 import { useAppStore } from '../store/app-store';
 import { insertAtCursor } from '../core/image-inserter';
 
@@ -104,6 +105,7 @@ export function Layout() {
         onClose={() => setAssetPanelOpen(false)}
         onInsert={handleAssetInsert}
       />
+      <ShortcutsHelp />
     </div>
   );
 }

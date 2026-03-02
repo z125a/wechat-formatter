@@ -4,6 +4,10 @@ import { ImageDialog } from './ImageDialog';
 import { TemplateDialog } from './TemplateDialog';
 import { ArticleManager } from './ArticleManager';
 import { ExportDialog } from './ExportDialog';
+import { CustomThemeEditor } from './CustomThemeEditor';
+import { SaveTemplateDialog } from './SaveTemplateDialog';
+import { WordStats } from './WordStats';
+import { DragReorder } from './DragReorder';
 import { buildImageMarkdown, insertAtCursor } from '../core/image-inserter';
 import { getTemplate } from '../core/template-manager';
 
@@ -90,6 +94,10 @@ export function Toolbar() {
       </button>
       <ArticleManager />
       <ExportDialog />
+      <SaveTemplateDialog />
+      <CustomThemeEditor />
+      <WordStats />
+      <DragReorder />
       <button className="toolbar-btn toolbar-btn-ghost" onClick={() => setFullscreen(true)} title="全屏模式 (F11)">
         🖥️ 全屏
       </button>
